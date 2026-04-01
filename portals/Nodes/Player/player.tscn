@@ -1,0 +1,48 @@
+[gd_scene format=3 uid="uid://df26ys1e57l2l"]
+
+[ext_resource type="Script" uid="uid://crju1ifyw5dyf" path="res://Nodes/Player/player.gd" id="1_us8wf"]
+[ext_resource type="Script" uid="uid://ceoyjy5m2ulki" path="res://Nodes/Player/ignore_rotate.gd" id="2_lkjqq"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_5s528"]
+resource_local_to_scene = true
+size = Vector3(0.75, 1.75, 0.75)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_0fd4k"]
+resource_local_to_scene = true
+size = Vector3(0.75, 1.25, 0.75)
+
+[node name="Player" type="CharacterBody3D" unique_id=1428363437]
+physics_interpolation_mode = 1
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
+collision_layer = 2097154
+collision_mask = 2097153
+collision_priority = 5.0
+floor_constant_speed = true
+platform_floor_layers = 4292870142
+script = ExtResource("1_us8wf")
+
+[node name="BoundingBox" type="CollisionShape3D" parent="." unique_id=1112672228 node_paths=PackedStringArray("top_parent")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.85, 0)
+shape = SubResource("BoxShape3D_5s528")
+script = ExtResource("2_lkjqq")
+top_parent = NodePath("..")
+
+[node name="CrouchArea" type="Area3D" parent="BoundingBox" unique_id=116112194]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.85, 0)
+collision_layer = 0
+collision_priority = 5.0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="BoundingBox/CrouchArea" unique_id=1206707616]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1, 0)
+shape = SubResource("BoxShape3D_0fd4k")
+debug_color = Color(0.6285, 0.347414, 1, 0.42)
+
+[node name="HeadAnchor" type="Node3D" parent="." unique_id=2121783143]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
+
+[node name="RotationHelper" type="Node3D" parent="HeadAnchor" unique_id=1768376278]
+
+[node name="CameraHolder" type="Node3D" parent="HeadAnchor/RotationHelper" unique_id=1439329297]
+
+[node name="Camera" type="Camera3D" parent="HeadAnchor/RotationHelper/CameraHolder" unique_id=1888675057]
+fov = 90.0

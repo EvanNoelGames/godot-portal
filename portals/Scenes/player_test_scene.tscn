@@ -1,0 +1,63 @@
+[gd_scene format=3 uid="uid://cq33bbyxdirfp"]
+
+[ext_resource type="PackedScene" uid="uid://df26ys1e57l2l" path="res://Nodes/Player/player.tscn" id="1_jaum6"]
+[ext_resource type="Resource" uid="uid://d2jli0ii2guhf" path="res://Nodes/Resources/movement_settings/base_movement_settings.tres" id="2_fp515"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_jaum6"]
+size = Vector3(20, 1, 20)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_fp515"]
+size = Vector3(20, 1, 20)
+
+[sub_resource type="BoxMesh" id="BoxMesh_fp515"]
+size = Vector3(3, 1, 5)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_jjkjk"]
+size = Vector3(3, 1, 5)
+
+[sub_resource type="BoxMesh" id="BoxMesh_62q3j"]
+size = Vector3(3, 1, 5)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_6vl20"]
+size = Vector3(3, 1, 5)
+
+[node name="PlayerTestScene" type="Node3D" unique_id=1997632050]
+
+[node name="Player" parent="." unique_id=1428363437 instance=ExtResource("1_jaum6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+_movement_settings = ExtResource("2_fp515")
+
+[node name="Geometry" type="Node3D" parent="." unique_id=145330962]
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Geometry" unique_id=1246463363]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Geometry/StaticBody3D" unique_id=15820420]
+mesh = SubResource("BoxMesh_jaum6")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Geometry/StaticBody3D" unique_id=2027509814]
+shape = SubResource("BoxShape3D_fp515")
+
+[node name="StaticBody3D2" type="StaticBody3D" parent="Geometry" unique_id=1380813036]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 2.5, 1.5, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Geometry/StaticBody3D2" unique_id=140931543]
+mesh = SubResource("BoxMesh_fp515")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Geometry/StaticBody3D2" unique_id=1418915667]
+shape = SubResource("BoxShape3D_jjkjk")
+
+[node name="StaticBody3D3" type="StaticBody3D" parent="Geometry" unique_id=91730842]
+transform = Transform3D(1.9106855e-15, 4.371139e-08, -1, 1, -4.371139e-08, 0, -4.371139e-08, -1, -4.371139e-08, -0.5, 1.5, 2)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Geometry/StaticBody3D3" unique_id=878402907]
+mesh = SubResource("BoxMesh_62q3j")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Geometry/StaticBody3D3" unique_id=115235566]
+shape = SubResource("BoxShape3D_6vl20")
+
+[node name="Lights" type="Node3D" parent="." unique_id=2035713171]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="Lights" unique_id=1624867225]
+transform = Transform3D(1, 0, 0, 0, 0.70710677, 0.70710677, 0, -0.70710677, 0.70710677, 0, 5.5, 0)
+shadow_enabled = true
