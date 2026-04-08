@@ -11,9 +11,13 @@ config_version=5
 [application]
 
 config/name="portals"
-run/main_scene="uid://cfxm1watp2vt6"
+run/main_scene="uid://ctdg37fupfkis"
 config/features=PackedStringArray("4.6", "Forward Plus")
 config/icon="res://icon.svg"
+
+[autoload]
+
+Global="*uid://c7srnua03kle5"
 
 [display]
 

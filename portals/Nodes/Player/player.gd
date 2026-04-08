@@ -20,7 +20,10 @@ var wish_jump : bool = false
 @onready var _crouch_area : Area3D = $BoundingBox/CrouchArea
 @onready var _camera = $HeadAnchor/RotationHelper/CameraHolder/Camera
 
-#region Ready, Process
+#region Enter Tree, Ready, Process
+func _enter_tree() -> void:
+	Global.player_node = self
+
 func _ready() -> void:
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 
@@ -29,6 +32,11 @@ func _physics_process(delta: float):
 
 func _process(_delta: float):
 	poll_input()
+#endregion
+
+#region Getters
+func get_camera() -> Camera3D:
+	return _camera
 #endregion
 
 #region Input
