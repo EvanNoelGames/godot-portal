@@ -42,7 +42,7 @@ void fragment(){
 	
 	vec3 screen_color = texture(SCREEN_TEXTURE, uv).rgb;
 	
-	vec2 pixelSize = vec2(1 / textureSize(SCREEN_TEXTURE, 0));
+	vec2 pixelSize = 1.0 / vec2(textureSize(SCREEN_TEXTURE, 0));
 	
 	float depth = texture(DEPTH_TEXTURE, uv).x;
 	vec3 ndc = vec3(SCREEN_UV * 2.0 - 1.0, depth);
