@@ -5,7 +5,34 @@ uniform sampler2D NORMAL_TEXTURE : hint_normal_roughness_texture, filter_linear;
 uniform sampler2D DEPTH_TEXTURE : source_color, hint_depth_texture;
 
 uniform int blurRadius = 5;
+uniform uint kernelSize = 5;
 uniform vec3 offset = vec3(0.0);
+
+float calculateLuminance(vec3 color){
+	return 0.2126 * color.r + 0.7152 * color.g + 0.0722 * color.b;
+}
+
+vec4 sampleQuadrant(vec2 uv, int x1, int x2, int y1, int y2, float n){
+	float luminanceSum = 0.0;
+	float luminanceSum2 = 0.0;
+	vec3 colorSum = vec3(0.0);
+	
+	for (int x = x1; x <= x2; ++x){
+		for (int y = y1; y <= y2; ++y){
+			vec3 c = texture(SCREEN_TEXTURE, uv + vec2(float(x),float(y))).rgb;
+			float l = calculateLuminance(c);
+			luminanceSum += l;
+			luminanceSum2 += l * l;
+			colorSum += c;
+		}
+	}
+	
+	float average = luminanceSum / n;
+	
+	float standardDeviation = abs(luminanceSum2 / n - average * average);
+	
+	return vec4(colorSum / n, standardDeviation);
+}
 
 void vertex(){
 	POSITION = vec4(VERTEX, 1.0);
@@ -27,102 +54,20 @@ void fragment(){
 	//Convert to Normalized device coordinates
 	view.xyz / view.x;
 	
-	vec2 screenSize = VIEWPORT_SIZE;
-	float n = float((blurRadius + 1) * (blurRadius + 1));
-	vec3 m0 = offset; 
-	vec3 m1 = offset;
-	vec3 m2 = offset;
-	vec3 m3 = offset;
-	vec3 s0 = offset;
-	vec3 s1 = offset;
-	vec3 s2 = offset;
-	vec3 s3 = offset;
+	int radius = int(kernelSize) / 2;
 	
-	vec3 c;
+	float windowSize = 2.0 * float(radius) + 1.0;
 	
+	int quadrantSize = int(ceil(windowSize / 2.0));
 	
-	//Iterate through kernel
-	{
-		for (int j = -blurRadius; j <= 0; ++j){
-		for (int i = -blurRadius; i <= 0; ++i){
-			c = texture(SCREEN_TEXTURE, uv + vec2(float(i), float(j)) * screenSize).rgb;
-			m0 += c;
-			s0 += c * c;
-		}
-		}
+	int numSamples = quadrantSize * quadrantSize;
 	
-		for (int j = -blurRadius; j <= 0; ++j){
-		for (int i = 0; i <= blurRadius; ++i){
-			c = texture(SCREEN_TEXTURE, uv + vec2(float(i), float(j)) * screenSize).rgb;
-			m1 += c;
-			s1 += c * c;
-		}
-		}
+	vec4 q1 = sampleQuadrant(uv, -radius, 0, -radius, 0, float(numSamples));
+	vec4 q2 = sampleQuadrant(uv, 0, radius, -radius, 0, float(numSamples));
+	vec4 q3 = sampleQuadrant(uv, 0, radius, 0, radius, float(numSamples));
+	vec4 q4 = sampleQuadrant(uv, -radius, 0, 0, radius, float(numSamples));
 	
-		for (int j = 0; j <= blurRadius; ++j){
-		for (int i = 0; i <= blurRadius; ++i){
-			c = texture(SCREEN_TEXTURE, uv + vec2(float(i), float(j)) * screenSize).rgb;
-			m2 += c;
-			s2 += c * c;
-		}
-		}
-	
-		for (int j = 0; j <= blurRadius; ++j){
-		for (int i = -blurRadius; i <= 0; ++i){
-			c = texture(SCREEN_TEXTURE, uv + vec2(float(i), float(j)) * screenSize).rgb;
-			m3 += c;
-			s3 += c * c;
-		}
-		}
-	}
-	
-	//Get standard deviation
-	float minSigma2 = 1e+2;
-	m0 /= n;
-	s0 = abs(s0 / n - m0 * m0);
-	
-	//Get color average
-	float sigma2 = s0.r + s0.g + s0.g;
-	if (sigma2 < minSigma2){
-		minSigma2 = sigma2;
-		ALBEDO = vec3(m0);
-	}
-	
-	//Get standard deviation
-	minSigma2 = 1e+2;
-	m1 /= n;
-	s1 = abs(s1 / n - m1 * m1);
-	
-	//Get color average
-	sigma2 = s1.r + s1.g + s1.g;
-	if (sigma2 < minSigma2){
-		minSigma2 = sigma2;
-		ALBEDO = vec3(m1);
-	}
-	
-	
-	//Get standard deviation
-	minSigma2 = 1e+2;
-	m2 /= n;
-	s2 = abs(s2 / n - m2 * m2);
-	
-	//Get color average
-	sigma2 = s2.r + s2.g + s2.g;
-	if (sigma2 < minSigma2){
-		minSigma2 = sigma2;
-		ALBEDO = vec3(m2);
-	}
-	
-	//Get standard deviation
-	minSigma2 = 1e+2;
-	m3 /= n;
-	s3 = abs(s3 / n - m3 * m3);
-	
-	//Get color average
-	sigma2 = s3.r + s3.g + s3.g;
-	if (sigma2 < minSigma2){
-		minSigma2 = sigma2;
-		ALBEDO = vec3(m3);
-	}
+	//Get the quadrant with the smallest amount of standard deviation
+	float minimumDeviation = min(q1.a, min(q2.a, min(q3.a, q4.a)));
 	
 }
