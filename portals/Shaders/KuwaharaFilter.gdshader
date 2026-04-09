@@ -11,6 +11,10 @@ float calculateLuminance(vec3 color){
 	return 0.2126 * color.r + 0.7152 * color.g + 0.0722 * color.b;
 }
 
+float gaussian(float sigma, vec2 position){
+	return (1.0 / (2.0 * PI * sigma * sigma)) * exp(-((position.x * position.x + position.y * position.y) / (2.0 * sigma * sigma)));
+}
+
 vec4 sampleQuadrant(vec2 uv, vec2 pixelSize, int x1, int x2, int y1, int y2, float n){
 	float luminanceSum = 0.0;
 	float luminanceSum2 = 0.0;

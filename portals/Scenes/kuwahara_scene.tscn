@@ -2,6 +2,7 @@
 
 [ext_resource type="Shader" uid="uid://dhq8gw6rtntgh" path="res://Shaders/KuwaharaFilter.gdshader" id="1_qx375"]
 [ext_resource type="ArrayMesh" uid="uid://c5md4al0hkrxl" path="res://Models/suzanne.obj" id="2_p1mg8"]
+[ext_resource type="ArrayMesh" uid="uid://1fm3bcjlufng" path="res://Models/sponza.obj" id="3_o7am8"]
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_uvnb3"]
 
@@ -30,7 +31,7 @@ mesh = SubResource("PlaneMesh_uvnb3")
 shape = SubResource("WorldBoundaryShape3D_qx375")
 
 [node name="Camera3D" type="Camera3D" parent="." unique_id=1359574834]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.9944844, 10.042215)
+transform = Transform3D(-0.14551319, 0, -0.98935634, 0, 1, 0, 0.98935634, 0, -0.14551319, -15.519762, 18.92114, 0.8231468)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Camera3D" unique_id=1210299860]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.49093342)
@@ -39,5 +40,15 @@ mesh = SubResource("QuadMesh_uvnb3")
 surface_material_override/0 = SubResource("ShaderMaterial_p1mg8")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=738392532]
-transform = Transform3D(-1.6205161, 0, -1.5612557, 0, 2.250243, 0, 1.5612557, 0, -1.6205161, 0, 5.425217, 0)
+transform = Transform3D(-1.6205161, 0, -1.5612557, 0, 2.250243, 0, 1.5612557, 0, -1.6205161, 0, 15.813272, 0)
 mesh = ExtResource("2_p1mg8")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="." unique_id=1611477974]
+transform = Transform3D(-0.034914896, 0, -0.0010667434, 0, 0.034931194, 0, 0.0010667434, 0, -0.034914896, 0, 9.442625, 0)
+mesh = ExtResource("3_o7am8")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1384092856]
+transform = Transform3D(1, 0, 0, 0, 0.93363047, 0.3582376, 0, -0.3582376, 0.93363047, 0, 0, 0)
+light_color = Color(0.9607843, 0.9254902, 0.73333335, 1)
+light_energy = 1.897
+light_indirect_energy = 5.935
