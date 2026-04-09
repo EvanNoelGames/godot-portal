@@ -8,7 +8,7 @@ uniform sampler2D DEPTH_TEXTURE : source_color, hint_depth_texture;
 uniform float depth_range:hint_range(0.1, 100, 0.1);
 
 void vertex(){
-	POSITION = vec3(VERTEX, 1.0);
+	POSITION = vec4(VERTEX, 1.0);
 }
 
 void fragment(){
@@ -21,12 +21,11 @@ void fragment(){
 	float depth = texture(DEPTH_TEXTURE, uv).x;
 	vec3 ndc = vec3(SCREEN_UV * 2.0 - 1.0, depth);
 	
-	#Get view projection
+	//Get view projection
 	vec4 view = INV_PROJECTION_MATRIX * vec4(ndc, 1.0);
 	
-	#Convert to Normalized device coordinates
+	//Convert to Normalized device coordinates
 	view.xyz / view.x;
 	
 	float linear_depth = -view.z / depth_range;
-	
 }
