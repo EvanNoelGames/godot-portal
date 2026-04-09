@@ -69,5 +69,12 @@ void fragment(){
 	
 	//Get the quadrant with the smallest amount of standard deviation
 	float minimumDeviation = min(q1.a, min(q2.a, min(q3.a, q4.a)));
+	ivec4 q = ivec4(equal(vec4(q1.a, q2.a, q3.a, q4.a), vec4(minimumDeviation)));
 	
+	if (dot(vec4(q), vec4(1.0)) > 1.0){
+		ALBEDO = vec3((q1.rgb + q2.rgb + q3.rgb + q4.rgb) / 4.0);
+	}
+	else{
+		ALBEDO = vec3(q1.rgb * float(q.x) + q2.rgb * float(q.y) + q3.rgb * float(q.z) + q4.rgb * float(q.w));
+	}
 }
