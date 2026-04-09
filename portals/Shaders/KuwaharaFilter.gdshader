@@ -76,6 +76,7 @@ void fragment(){
 		}
 	}
 	
+	//Get standard deviation
 	float minSigma2 = 1e+2;
 	m0 /= n;
 	s0 = abs(s0 / n - m0 * m0);
@@ -87,6 +88,41 @@ void fragment(){
 		ALBEDO = vec3(m0);
 	}
 	
+	//Get standard deviation
+	minSigma2 = 1e+2;
+	m1 /= n;
+	s1 = abs(s1 / n - m1 * m1);
 	
+	//Get color average
+	sigma2 = s1.r + s1.g + s1.g;
+	if (sigma2 < minSigma2){
+		minSigma2 = sigma2;
+		ALBEDO = vec3(m1);
+	}
+	
+	
+	//Get standard deviation
+	minSigma2 = 1e+2;
+	m2 /= n;
+	s2 = abs(s2 / n - m2 * m2);
+	
+	//Get color average
+	sigma2 = s2.r + s2.g + s2.g;
+	if (sigma2 < minSigma2){
+		minSigma2 = sigma2;
+		ALBEDO = vec3(m2);
+	}
+	
+	//Get standard deviation
+	minSigma2 = 1e+2;
+	m3 /= n;
+	s3 = abs(s3 / n - m3 * m3);
+	
+	//Get color average
+	sigma2 = s3.r + s3.g + s3.g;
+	if (sigma2 < minSigma2){
+		minSigma2 = sigma2;
+		ALBEDO = vec3(m3);
+	}
 	
 }
