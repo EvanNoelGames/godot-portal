@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://cfxm1watp2vt6"]
 
-[ext_resource type="Shader" uid="uid://duegjaerfp8v3" path="res://Scenes/TestShader.gdshader" id="1_qx375"]
+[ext_resource type="Shader" uid="uid://dhq8gw6rtntgh" path="res://Shaders/KuwaharaFilter.gdshader" id="1_qx375"]
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_uvnb3"]
 
@@ -13,8 +13,8 @@ size = Vector2(2, 2)
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_p1mg8"]
 render_priority = 0
 shader = ExtResource("1_qx375")
-shader_parameter/depth_range = 10.90000016242308
-shader_parameter/fog_color = Vector3(1, 1, 0.645)
+shader_parameter/blurRadius = 5
+shader_parameter/offset = Vector3(0, 0, 0)
 
 [node name="KuwaharaScene" type="Node3D" unique_id=473390469]
 
