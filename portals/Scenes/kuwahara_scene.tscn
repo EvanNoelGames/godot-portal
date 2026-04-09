@@ -13,7 +13,8 @@ size = Vector2(2, 2)
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_p1mg8"]
 render_priority = 0
 shader = ExtResource("1_qx375")
-shader_parameter/depth_range = 0.0
+shader_parameter/depth_range = 10.90000016242308
+shader_parameter/fog_color = Vector3(1, 1, 0.645)
 
 [node name="KuwaharaScene" type="Node3D" unique_id=473390469]
 

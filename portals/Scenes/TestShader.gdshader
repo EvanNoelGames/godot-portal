@@ -6,6 +6,7 @@ uniform sampler2D NORMAL_TEXTURE : hint_normal_roughness_texture, filter_linear;
 uniform sampler2D DEPTH_TEXTURE : source_color, hint_depth_texture;
 
 uniform float depth_range:hint_range(0.1, 100, 0.1);
+uniform vec3 fog_color;
 
 void vertex(){
 	POSITION = vec4(VERTEX, 1.0);
@@ -28,4 +29,10 @@ void fragment(){
 	view.xyz / view.x;
 	
 	float linear_depth = -view.z / depth_range;
+	
+	vec3 fog = vec3(linear_depth);
+	
+	vec3 finalColor = (fog + screen_color) * fog_color;
+	
+	ALBEDO = finalColor;
 }
