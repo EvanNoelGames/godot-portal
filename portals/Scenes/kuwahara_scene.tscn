@@ -1,3 +1,50 @@
 [gd_scene format=3 uid="uid://cfxm1watp2vt6"]
 
+[sub_resource type="PlaneMesh" id="PlaneMesh_uvnb3"]
+
+[sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_qx375"]
+
+[sub_resource type="QuadMesh" id="QuadMesh_uvnb3"]
+flip_faces = true
+size = Vector2(2, 2)
+
+[sub_resource type="Shader" id="Shader_uvnb3"]
+code = "shader_type spatial;
+
+void vertex() {
+	// Called for every vertex the material is visible on.
+}
+
+void fragment() {
+	// Called for every pixel the material is visible on.
+}
+
+//void light() {
+//	// Called for every pixel for every light affecting the material.
+//	// Uncomment to replace the default light processing function with this one.
+//}
+"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_p1mg8"]
+render_priority = 0
+shader = SubResource("Shader_uvnb3")
+
 [node name="KuwaharaScene" type="Node3D" unique_id=473390469]
+
+[node name="StaticBody3D" type="StaticBody3D" parent="." unique_id=478244318]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D" unique_id=195358348]
+transform = Transform3D(10.022142, 0, 0, 0, 10.022142, 0, 0, 0, 10.022142, 0, 0, 0)
+mesh = SubResource("PlaneMesh_uvnb3")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D" unique_id=1326459370]
+shape = SubResource("WorldBoundaryShape3D_qx375")
+
+[node name="Camera3D" type="Camera3D" parent="." unique_id=1359574834]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.9944844, 10.042215)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Camera3D" unique_id=1210299860]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1.5475826)
+extra_cull_margin = 16384.0
+mesh = SubResource("QuadMesh_uvnb3")
+surface_material_override/0 = SubResource("ShaderMaterial_p1mg8")
