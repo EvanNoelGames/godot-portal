@@ -1,5 +1,8 @@
 [gd_scene format=3 uid="uid://cfxm1watp2vt6"]
 
+[ext_resource type="Shader" uid="uid://dhq8gw6rtntgh" path="res://Shaders/KuwaharaFilter.gdshader" id="1_qx375"]
+[ext_resource type="ArrayMesh" uid="uid://c5md4al0hkrxl" path="res://Models/suzanne.obj" id="2_p1mg8"]
+
 [sub_resource type="PlaneMesh" id="PlaneMesh_uvnb3"]
 
 [sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_qx375"]
@@ -8,26 +11,12 @@
 flip_faces = true
 size = Vector2(2, 2)
 
-[sub_resource type="Shader" id="Shader_uvnb3"]
-code = "shader_type spatial;
-
-void vertex() {
-	// Called for every vertex the material is visible on.
-}
-
-void fragment() {
-	// Called for every pixel the material is visible on.
-}
-
-//void light() {
-//	// Called for every pixel for every light affecting the material.
-//	// Uncomment to replace the default light processing function with this one.
-//}
-"
-
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_p1mg8"]
 render_priority = 0
-shader = SubResource("Shader_uvnb3")
+shader = ExtResource("1_qx375")
+shader_parameter/blurRadius = 10
+shader_parameter/kernelSize = 15
+shader_parameter/offset = Vector3(0, 0, 0)
 
 [node name="KuwaharaScene" type="Node3D" unique_id=473390469]
 
@@ -44,7 +33,11 @@ shape = SubResource("WorldBoundaryShape3D_qx375")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.9944844, 10.042215)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Camera3D" unique_id=1210299860]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1.5475826)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.49093342)
 extra_cull_margin = 16384.0
 mesh = SubResource("QuadMesh_uvnb3")
 surface_material_override/0 = SubResource("ShaderMaterial_p1mg8")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=738392532]
+transform = Transform3D(-1.6205161, 0, -1.5612557, 0, 2.250243, 0, 1.5612557, 0, -1.6205161, 0, 5.425217, 0)
+mesh = ExtResource("2_p1mg8")
