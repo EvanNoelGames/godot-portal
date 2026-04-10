@@ -16,7 +16,8 @@ size = Vector2(2, 2)
 render_priority = 0
 shader = ExtResource("1_qx375")
 shader_parameter/blurRadius = 10
-shader_parameter/kernelSize = 15
+shader_parameter/_KernelSize = 5
+shader_parameter/_Sharpness = 0.0
 shader_parameter/offset = Vector3(0, 0, 0)
 
 [node name="KuwaharaScene" type="Node3D" unique_id=473390469]

@@ -4,7 +4,8 @@ uniform sampler2D SCREEN_TEXTURE : hint_screen_texture, filter_linear_mipmap;
 uniform sampler2D DEPTH_TEXTURE : source_color, hint_depth_texture;
 
 uniform int blurRadius = 5;
-uniform uint kernelSize = 5;
+uniform uint _KernelSize = 5;
+uniform float _Sharpness:hint_range(0.0, 20.0, 15);
 uniform vec3 offset = vec3(0.0);
 
 const int Sectors = 8;
@@ -42,7 +43,7 @@ vec4 sampleQuadrant(vec2 uv, vec2 pixelSize, int x1, int x2, int y1, int y2, flo
 vec4 generalizedKuwahara(vec2 uv, float depth){
 	vec4 m[8];
 	vec3 s[8];
-	int radius = int(kernelSize) / 2;
+	int radius = int(_KernelSize) / 2;
 	
 	//Number of sectors our circle filter will have 
 	int n = Sectors;
@@ -71,6 +72,19 @@ vec4 generalizedKuwahara(vec2 uv, float depth){
 		}
 	}
 	
+	vec4 output = vec4(0.0);
+	for (int k = 0; k < n; ++k){
+		//Convert to normalized device coordinates
+		m[k].rgb /= m[k].w;
+		
+		s[k] = abs(s[k] / m[k].w - m[k].rgb * m[k].rgb);
+		
+		float sigma2 = s[k].r + s[k].g + s[k].b;
+		float w = 1.0f / (1.0f + pow(abs(1000.0 * sigma2), 0.5 * _Sharpness));
+		
+		output += vec4(m[k].rgb * w, w);
+	}
+	
 	return vec4(1.0);
 }
 
@@ -94,7 +108,7 @@ void fragment(){
 	//Convert to Normalized device coordinates
 	view.xyz / view.x;
 	
-	int radius = int(kernelSize) / 2;
+	int radius = int(_KernelSize) / 2;
 	
 	float windowSize = 2.0 * float(radius) + 1.0;
 	
