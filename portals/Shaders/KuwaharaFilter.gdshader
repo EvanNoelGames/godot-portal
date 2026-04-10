@@ -7,6 +7,8 @@ uniform int blurRadius = 5;
 uniform uint kernelSize = 5;
 uniform vec3 offset = vec3(0.0);
 
+const int Sectors = 8;
+
 float calculateLuminance(vec3 color){
 	return 0.2126 * color.r + 0.7152 * color.g + 0.0722 * color.b;
 }
@@ -35,6 +37,41 @@ vec4 sampleQuadrant(vec2 uv, vec2 pixelSize, int x1, int x2, int y1, int y2, flo
 	float standardDeviation = abs(luminanceSum2 / n - average * average);
 	
 	return vec4(colorSum / n, standardDeviation);
+}
+
+vec4 generalizedKuwahara(vec2 uv, float depth){
+	vec4 m[8];
+	vec3 s[8];
+	int radius = int(kernelSize) / 2;
+	
+	//Number of sectors our circle filter will have 
+	int n = Sectors;
+	
+	for (int k = 0; k < n; ++k){
+		m[k] = vec4(0.0);
+		s[k] = vec3(0.0);
+	}
+	
+	float piN = 2.0 * PI / float(n);
+	mat2 x = mat2(1.0);
+	
+	x[0][0] = cos(piN);
+	x[0][1] = sin(piN);
+	x[1][0] = -sin(piN);
+	x[1][1] = cos(piN);
+	
+	for (int x = -radius; x <= radius; ++x){
+		for (int y = -radius; y <= radius; ++y){
+			vec2 v = 0.5 * vec2(float(x),float(y)) / float(radius);
+			//Sample screen texture
+			vec3 c = texture(SCREEN_TEXTURE, uv + vec2(float(x),float(y))).rgb;
+			for (int k = 0; k < n; ++k){
+				//Todo
+			}
+		}
+	}
+	
+	return vec4(1.0);
 }
 
 void vertex(){
