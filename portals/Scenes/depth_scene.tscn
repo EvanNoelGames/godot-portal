@@ -1,0 +1,46 @@
+[gd_scene format=3 uid="uid://dsnu5kv5rsw18"]
+
+[ext_resource type="ArrayMesh" uid="uid://c5md4al0hkrxl" path="res://Models/suzanne.obj" id="1_n5qv0"]
+[ext_resource type="Shader" uid="uid://cst7hhfe6t8c" path="res://Shaders/DepthShader.gdshader" id="2_3uynv"]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_3uynv"]
+
+[sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_xfafo"]
+
+[sub_resource type="QuadMesh" id="QuadMesh_xfafo"]
+flip_faces = true
+size = Vector2(2, 2)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_18b1m"]
+render_priority = 0
+shader = ExtResource("2_3uynv")
+shader_parameter/focus_point = Vector3(0, 3.62, 0)
+
+[node name="DepthScene" type="Node3D" unique_id=553511288]
+
+[node name="StaticBody3D" type="StaticBody3D" parent="." unique_id=519461145]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D" unique_id=1842265218]
+transform = Transform3D(10.022142, 0, 0, 0, 10.022142, 0, 0, 0, 10.022142, 0, 0, 0)
+mesh = SubResource("PlaneMesh_3uynv")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D" unique_id=1893517784]
+shape = SubResource("WorldBoundaryShape3D_xfafo")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=640151983]
+transform = Transform3D(2.2489204, 0, -0.0771198, 0, 2.250243, 0, 0.0771198, 0, 2.2489204, 0, 3.6195211, 0)
+mesh = ExtResource("1_n5qv0")
+
+[node name="Camera3D" type="Camera3D" parent="." unique_id=1557639291]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.7572017, 3.514646, 6.7901955)
+cull_mask = 1048573
+current = true
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="." unique_id=74004750]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.7572017, 3.514646, 6.299262)
+layers = 2
+extra_cull_margin = 16384.0
+mesh = SubResource("QuadMesh_xfafo")
+surface_material_override/0 = SubResource("ShaderMaterial_18b1m")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1823033013]
