@@ -60,35 +60,38 @@ void fragment() {
 	// Called for every pixel the material is visible on.
 	
 	// take our screen space coords
-
 	float depth = texture(depth_texture, SCREEN_UV, 0.0).r;
 	
-	// and change them to normalised device coords
+	// change them to normalised device coords
 	vec3 ndc = vec3(SCREEN_UV * 2.0 - 1.0, FRAGCOORD.z);
 	
 	// then convert thoose to view space
 	vec4 view = INV_PROJECTION_MATRIX * vec4(ndc, 1.0);
 	view.xyz /= view.w; 
-	// the distance of the pixel from the camera 
+	
+	// to get the distance of the pixel from the camera 
 	float linear_depth = -view.z;
 	
 	// world camera 
 	vec4 world = INV_VIEW_MATRIX * INV_PROJECTION_MATRIX * vec4(ndc, 1.0); 
 	vec3 world_position = world.xyz / world.w; 
-	
-	float unFocusedUV = 2.0;
-	vec3 unFocusedTex = texture(depth_texture, UV + vec2(unFocusedUV)).rgb;
-	
-	float focusedUV = 16.0;
+
+	// sample what the screen normally looks like
+	// to use when we are in focus
 	vec3 focusTex = texture(screen_texture, SCREEN_UV).rgb;
 
+	// change the focus point from world to view space
+	// so we can use it to measure the distance for the blur
 	vec4 focus_in_view = VIEW_MATRIX * vec4(focus_point, 1.0);
 	
 	float blur = smoothstep( min_distance, max_distance, abs(view.z - focus_in_view.z));
 
 	
 	vec2 res = vec2(1.0 / VIEWPORT_SIZE);
+	// calculate the blur effect
 	vec3 blured = blur_effect(screen_texture, SCREEN_UV, vec2(1.0, 1.0), VIEWPORT_SIZE);
 	
+	// mix the foucsed texture with the blur effect based on 
+	// the distance the camera is from the focus point
 	ALBEDO = mix(focusTex, blured, blur);
 }
