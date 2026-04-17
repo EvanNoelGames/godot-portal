@@ -14,6 +14,7 @@ size = Vector2(2, 2)
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_18b1m"]
 render_priority = 0
 shader = ExtResource("2_3uynv")
+shader_parameter/focus_point = Vector3(0, 3.62, 0)
 
 [node name="DepthScene" type="Node3D" unique_id=553511288]
 
@@ -31,10 +32,15 @@ transform = Transform3D(2.2489204, 0, -0.0771198, 0, 2.250243, 0, 0.0771198, 0, 
 mesh = ExtResource("1_n5qv0")
 
 [node name="Camera3D" type="Camera3D" parent="." unique_id=1557639291]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.5012922, 3.9944844, 10.042215)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.7572017, 3.514646, 6.7901955)
+cull_mask = 1048573
+current = true
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Camera3D" unique_id=74004750]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.49093342)
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="." unique_id=74004750]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.7572017, 3.514646, 6.299262)
+layers = 2
 extra_cull_margin = 16384.0
 mesh = SubResource("QuadMesh_xfafo")
 surface_material_override/0 = SubResource("ShaderMaterial_18b1m")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1823033013]
