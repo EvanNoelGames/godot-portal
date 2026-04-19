@@ -1,0 +1,26 @@
+[gd_scene format=3 uid="uid://nrjnkhls1bk4"]
+
+[ext_resource type="Script" uid="uid://r6yxmipwyf2w" path="res://Nodes/Portals/portal.gd" id="1_qljpf"]
+[ext_resource type="Shader" uid="uid://d37x7uxpt6rv0" path="res://Nodes/Portals/portal_cutout.gdshader" id="2_w0p17"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_qljpf"]
+render_priority = 0
+shader = ExtResource("2_w0p17")
+
+[sub_resource type="SphereMesh" id="SphereMesh_ni2kv"]
+material = SubResource("ShaderMaterial_qljpf")
+
+[node name="Portal" type="Node3D" unique_id=1438097116]
+script = ExtResource("1_qljpf")
+
+[node name="SubViewport" type="SubViewport" parent="." unique_id=1340857426]
+gui_disable_input = true
+size = Vector2i(3840, 2160)
+
+[node name="Camera3D" type="Camera3D" parent="SubViewport" unique_id=980231044]
+fov = 90.0
+near = 0.001
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=546627379]
+transform = Transform3D(0.915, 0, 0, 0, 7.212379e-09, -1.875, 0, -0.165, -8.195885e-08, 0, 0, 0)
+mesh = SubResource("SphereMesh_ni2kv")
