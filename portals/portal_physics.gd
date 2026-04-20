@@ -30,10 +30,9 @@ func _process(delta: float) -> void:
 	print(portalSide)
 	
 	if (portalSide != previousPortalSide):
-		var m := _linked_portal.transform * transform * _current_traveler.transform
+		var m := _linked_portal.transform * global_transform * _current_traveler.transform
 		_current_traveler.position = m.basis.z
 		_current_traveler.rotation = m.basis.get_euler()
-		print(m)
 		
 	#Cache old offset
 	_previous_offset = playerOffset;
@@ -44,6 +43,7 @@ func _on_area_3d_body_entered(body: Node3D) -> void:
 		return
 	
 	_current_traveler = body;
+	_previous_offset = _current_traveler.position - position
 	print("Added!")
 
 ##Remove current traveler
@@ -53,3 +53,4 @@ func _on_area_3d_body_exited(body: Node3D) -> void:
 	
 	_current_traveler = null;
 	print("Removed!")
+	_previous_offset = Vector3(0.0,0.0,0.0)
