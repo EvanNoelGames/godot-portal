@@ -12,6 +12,9 @@ var _previous_offset = Vector3(0.0,0.0,0.0)
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	
+	DebugDraw3D.draw_ray(global_position, -global_transform.basis.z, 2.0, Color(0,1,0,1))
+	DebugDraw3D.draw_line(global_position, _previous_offset, Color(1,0,1,1))
+	
 	if (_current_traveler == null):
 		return;
 	
@@ -19,10 +22,12 @@ func _process(delta: float) -> void:
 	#the players offset from the portal and the portals position
 	
 	#Calculate player offset from portal
-	var playerOffset = _current_traveler.position - position;
+	var playerOffset = _current_traveler.global_position - global_position;
 	
 	#Get which side of the portal the player is on
 	var portalSide = sign(playerOffset.dot(transform.basis.z));
+	DebugDraw3D.draw_line(global_position, playerOffset, Color(1,0,0,1))
+	
 	var previousPortalSide = sign(
 			_previous_offset.dot(transform.basis.z)
 		);
@@ -31,7 +36,7 @@ func _process(delta: float) -> void:
 	
 	if (portalSide != previousPortalSide):
 		var m := _linked_portal.transform * global_transform * _current_traveler.transform
-		_current_traveler.position = m.basis.z
+		_current_traveler.position = m.basis[2]
 		_current_traveler.rotation = m.basis.get_euler()
 		
 	#Cache old offset
@@ -53,4 +58,3 @@ func _on_area_3d_body_exited(body: Node3D) -> void:
 	
 	_current_traveler = null;
 	print("Removed!")
-	_previous_offset = Vector3(0.0,0.0,0.0)
