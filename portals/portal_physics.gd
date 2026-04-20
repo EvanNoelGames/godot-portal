@@ -5,47 +5,45 @@ extends Node3D
 @export var _linked_portal : Portal
 @onready var portal_1: Portal = $".."
 
-@onready var _player_camera : Camera3D = Global.player_node.get_camera()
+var _current_traveler : CharacterBody3D
 
-var currentTraveler : CharacterBody3D
+var _previous_offset = Vector3(0.0,0.0,0.0)
 
-var previous_offset = Vector3(0.0,0.0,0.0)
-
-# Called when the node enters the scene tree for the first time.
-func _ready() -> void:
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta: float) -> void:
+	
+	if (_current_traveler == null):
+		return;
 	
 	#Get the sign of the dot product of
 	#the players offset from the portal and the portals position
 	
 	#Calculate player offset from portal
-	var playerOffset = _player_camera.position - position;
+	var playerOffset = _current_traveler.position - position;
 	
 	#Get which side of the portal the player is on
-	var portalSide = sign(playerOffset.dot(global_transform.basis.z));
+	var portalSide = sign(playerOffset.dot(transform.basis.z));
 	var previousPortalSide = sign(
-			previous_offset.dot(global_transform.basis.z)
+			_previous_offset.dot(transform.basis.z)
 		);
+		
+	print(portalSide)
 	
+	if (portalSide != previousPortalSide):
+		var m := _linked_portal.transform * transform * _current_traveler.transform
+		_current_traveler.position = m.basis.z
+		_current_traveler.rotation = m.basis.get_euler()
+		print(m)
+		
 	#Cache old offset
-	previous_offset = playerOffset;
-	
-	#if (portalSide != previousPortalSide):
-		#_linked_portal.transform
-	
-	
-
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
+	_previous_offset = playerOffset;
 
 ##Add player to current traveler
 func _on_area_3d_body_entered(body: Node3D) -> void:
 	if (body is not CharacterBody3D):
 		return
 	
-	currentTraveler = body;
+	_current_traveler = body;
 	print("Added!")
 
 ##Remove current traveler
@@ -53,5 +51,5 @@ func _on_area_3d_body_exited(body: Node3D) -> void:
 	if (body is not CharacterBody3D):
 		return
 	
-	currentTraveler = null;
+	_current_traveler = null;
 	print("Removed!")

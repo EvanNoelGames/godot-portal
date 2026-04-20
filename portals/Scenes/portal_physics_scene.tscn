@@ -71,8 +71,9 @@ shadow_enabled = true
 transform = Transform3D(-1, 0, 1.509958e-07, 0, 1, 0, -1.509958e-07, 0, -1, -0.5, 1, 1.499)
 _linked_portal = NodePath("../Portal 2")
 
-[node name="PortalPhysics" type="Node3D" parent="Portal 1" unique_id=365443082]
+[node name="PortalPhysics" type="Node3D" parent="Portal 1" unique_id=365443082 node_paths=PackedStringArray("_linked_portal")]
 script = ExtResource("4_xolsh")
+_linked_portal = NodePath("../../Portal 2")
 
 [node name="Area3D" type="Area3D" parent="Portal 1/PortalPhysics" unique_id=854687049]
 collision_mask = 2
@@ -85,8 +86,18 @@ shape = SubResource("BoxShape3D_xolsh")
 transform = Transform3D(-2.1855693e-07, 0, -1, 0, 1, 0, 1, 0, -2.1855693e-07, 1.999, 1, -1)
 _linked_portal = NodePath("../Portal 1")
 
-[node name="PortalPhysics" type="Node3D" parent="Portal 2" unique_id=2096102868]
+[node name="PortalPhysics" type="Node3D" parent="Portal 2" unique_id=2115299326 node_paths=PackedStringArray("_linked_portal")]
 script = ExtResource("4_xolsh")
+_linked_portal = NodePath("../../Portal 1")
+
+[node name="Area3D" type="Area3D" parent="Portal 2/PortalPhysics" unique_id=1133017880]
+collision_mask = 2
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Portal 2/PortalPhysics/Area3D" unique_id=1936747385]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0049439073, -0.012817383, -0.12495422)
+shape = SubResource("BoxShape3D_xolsh")
 
 [connection signal="body_entered" from="Portal 1/PortalPhysics/Area3D" to="Portal 1/PortalPhysics" method="_on_area_3d_body_entered"]
 [connection signal="body_exited" from="Portal 1/PortalPhysics/Area3D" to="Portal 1/PortalPhysics" method="_on_area_3d_body_exited"]
+[connection signal="body_entered" from="Portal 2/PortalPhysics/Area3D" to="Portal 2/PortalPhysics" method="_on_area_3d_body_entered"]
+[connection signal="body_exited" from="Portal 2/PortalPhysics/Area3D" to="Portal 2/PortalPhysics" method="_on_area_3d_body_exited"]
