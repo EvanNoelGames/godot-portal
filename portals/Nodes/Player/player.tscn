@@ -11,6 +11,8 @@ size = Vector3(0.75, 1.75, 0.75)
 resource_local_to_scene = true
 size = Vector3(0.75, 1.25, 0.75)
 
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_us8wf"]
+
 [node name="Player" type="CharacterBody3D" unique_id=1428363437]
 physics_interpolation_mode = 1
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
@@ -40,9 +42,12 @@ debug_color = Color(0.6285, 0.347414, 1, 0.42)
 [node name="HeadAnchor" type="Node3D" parent="." unique_id=2121783143]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
 
+[node name="MeshInstance3D" type="MeshInstance3D" parent="HeadAnchor" unique_id=1665816427]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+mesh = SubResource("CapsuleMesh_us8wf")
+
 [node name="RotationHelper" type="Node3D" parent="HeadAnchor" unique_id=1768376278]
 
 [node name="CameraHolder" type="Node3D" parent="HeadAnchor/RotationHelper" unique_id=1439329297]
 
 [node name="Camera" type="Camera3D" parent="HeadAnchor/RotationHelper/CameraHolder" unique_id=1888675057]
-fov = 90.0
