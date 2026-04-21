@@ -2,7 +2,6 @@
 
 [ext_resource type="PackedScene" uid="uid://df26ys1e57l2l" path="res://Nodes/Player/player.tscn" id="1_u6j1p"]
 [ext_resource type="Resource" uid="uid://d2jli0ii2guhf" path="res://Nodes/Resources/movement_settings/base_movement_settings.tres" id="2_i2gj3"]
-[ext_resource type="PackedScene" uid="uid://jac2uuqov6um" path="res://Nodes/Portals/portal.tscn" id="3_lly36"]
 [ext_resource type="PackedScene" uid="uid://nrjnkhls1bk4" path="res://Nodes/Portals/textured_portal.tscn" id="4_i2gj3"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_jaum6"]
@@ -64,20 +63,10 @@ shape = SubResource("BoxShape3D_6vl20")
 transform = Transform3D(1, 0, 0, 0, 0.70710677, 0.70710677, 0, -0.70710677, 0.70710677, 0, 5.5, 0)
 shadow_enabled = true
 
-[node name="Portal 1" parent="." unique_id=1438097116 node_paths=PackedStringArray("_linked_portal") instance=ExtResource("3_lly36")]
-transform = Transform3D(-1, 0, 1.509958e-07, 0, 1, 0, -1.509958e-07, 0, -1, -0.5, 1, 1.499)
-visible = false
-_linked_portal = NodePath("../Portal 2")
-
-[node name="Portal 2" parent="." unique_id=1075828444 node_paths=PackedStringArray("_linked_portal") instance=ExtResource("3_lly36")]
-transform = Transform3D(-2.1855693e-07, 0, -1, 0, 1, 0, 1, 0, -2.1855693e-07, 1.999, 1, -1)
-visible = false
-_linked_portal = NodePath("../Portal 1")
-
-[node name="Portal" parent="." unique_id=1817579456 node_paths=PackedStringArray("_linked_portal") instance=ExtResource("4_i2gj3")]
-transform = Transform3D(1.24, 0, 0, 0, 1.24, 0, 0, 0, 1.24, 0, 1.2173916, 1.4681203)
+[node name="Portal" parent="." unique_id=1438097116 node_paths=PackedStringArray("_linked_portal") instance=ExtResource("4_i2gj3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.605, 1.166, 1.514)
 _linked_portal = NodePath("../Portal2")
 
-[node name="Portal2" parent="." unique_id=1888287532 node_paths=PackedStringArray("_linked_portal") instance=ExtResource("4_i2gj3")]
-transform = Transform3D(0.09161401, 0, 1.236611, 0, 1.24, 0, -1.236611, 0, 0.09161401, 2.0379286, 1.2173916, -0.99184966)
+[node name="Portal2" parent="." unique_id=812061021 node_paths=PackedStringArray("_linked_portal") instance=ExtResource("4_i2gj3")]
+transform = Transform3D(-0.12744164, -0.000985374, 0.9918456, -0.007731732, 0.99997014, 0, -0.991816, -0.0076686842, -0.12744544, 1.9944459, 1.3866837, -1.0962032)
 _linked_portal = NodePath("../Portal")

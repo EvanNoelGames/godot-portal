@@ -1,16 +1,25 @@
 [gd_scene format=3 uid="uid://jac2uuqov6um"]
 
 [ext_resource type="Script" uid="uid://r6yxmipwyf2w" path="res://Nodes/Portals/portal.gd" id="1_rla34"]
-[ext_resource type="Shader" uid="uid://d37x7uxpt6rv0" path="res://Nodes/Portals/portal_cutout.gdshader" id="2_b2lmi"]
+[ext_resource type="Shader" uid="uid://b0r6heqteswol" path="res://Nodes/Portals/portal_distortion.gdshader" id="2_4pdc0"]
+[ext_resource type="Shader" uid="uid://caewvotc8g3gn" path="res://Nodes/Portals/portal_swirl.gdshader" id="2_b2lmi"]
+[ext_resource type="Shader" uid="uid://d37x7uxpt6rv0" path="res://Nodes/Portals/portal_cutout.gdshader" id="3_4nd5k"]
 
-[sub_resource type="SphereMesh" id="SphereMesh_b2lmi"]
-radius = 0.1
-height = 0.2
+[sub_resource type="CanvasTexture" id="CanvasTexture_nxoej"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_7ka22"]
+render_priority = 0
+shader = ExtResource("2_4pdc0")
+shader_parameter/viewport_texture = SubResource("CanvasTexture_nxoej")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_4pdc0"]
+render_priority = 0
+shader = ExtResource("2_b2lmi")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_b2lmi"]
 resource_local_to_scene = true
 render_priority = 0
-shader = ExtResource("2_b2lmi")
+shader = ExtResource("3_4nd5k")
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_rla34"]
 resource_local_to_scene = true
@@ -28,10 +37,14 @@ render_target_clear_mode = 2
 fov = 90.0
 near = 0.001
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="SubViewport/Camera3D" unique_id=65684705]
-visible = false
-mesh = SubResource("SphereMesh_b2lmi")
+[node name="ColorRect" type="ColorRect" parent="SubViewport" unique_id=1910611417]
+material = SubResource("ShaderMaterial_7ka22")
+offset_right = 40.0
+offset_bottom = 40.0
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=546627379]
 transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0)
+material_overlay = SubResource("ShaderMaterial_4pdc0")
 mesh = SubResource("PlaneMesh_rla34")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1394717446]
