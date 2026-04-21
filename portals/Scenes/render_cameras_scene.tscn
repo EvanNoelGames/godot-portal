@@ -11,16 +11,16 @@ size = Vector3(20, 1, 20)
 size = Vector3(20, 1, 20)
 
 [sub_resource type="BoxMesh" id="BoxMesh_fp515"]
-size = Vector3(3, 1, 5)
+size = Vector3(3, 3, 7)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_jjkjk"]
-size = Vector3(3, 1, 5)
+size = Vector3(3, 3, 7)
 
 [sub_resource type="BoxMesh" id="BoxMesh_62q3j"]
-size = Vector3(3, 1, 5)
+size = Vector3(3, 3, 5)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_6vl20"]
-size = Vector3(3, 1, 5)
+size = Vector3(3, 3, 5)
 
 [node name="RenderCamerasScene" type="Node3D" unique_id=1997632050]
 
@@ -40,7 +40,7 @@ mesh = SubResource("BoxMesh_jaum6")
 shape = SubResource("BoxShape3D_fp515")
 
 [node name="StaticBody3D2" type="StaticBody3D" parent="Geometry" unique_id=1380813036]
-transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 2.5, 1.5, 0)
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 3.5, 1.5, 1)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Geometry/StaticBody3D2" unique_id=140931543]
 mesh = SubResource("BoxMesh_fp515")
@@ -49,7 +49,7 @@ mesh = SubResource("BoxMesh_fp515")
 shape = SubResource("BoxShape3D_jjkjk")
 
 [node name="StaticBody3D3" type="StaticBody3D" parent="Geometry" unique_id=91730842]
-transform = Transform3D(1.9106855e-15, 4.371139e-08, -1, 1, -4.371139e-08, 0, -4.371139e-08, -1, -4.371139e-08, -0.5, 1.5, 2)
+transform = Transform3D(1.9106855e-15, 4.371139e-08, -1, 1, -4.371139e-08, 0, -4.371139e-08, -1, -4.371139e-08, -0.5, 1.5, 3)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Geometry/StaticBody3D3" unique_id=878402907]
 mesh = SubResource("BoxMesh_62q3j")
