@@ -36,17 +36,27 @@ func _physics_process(delta: float) -> void:
 		#return
 	
 	if (portalSide != previousPortalSide && previousPortalSide != 0):
-		#Transform traveller velocity, position, and orientation to new portal basis
-		var flip := Transform3D(Basis(Vector3.UP, PI), Vector3.ZERO)
-		var m = _linked_portal.global_transform * flip * global_transform.affine_inverse() * _current_traveler.global_transform
-		_current_traveler.global_position = m.origin
-		_current_traveler.global_rotation = m.basis.get_euler()
-		_current_traveler.velocity = m.basis * _current_traveler.velocity;
-		
+		_update_player_transform()
 		var linked_physics = _linked_portal.get_node("PortalPhysics") as PortalPhysics
 		linked_physics.call_deferred("register_traveller", _current_traveler)
 		_current_traveler = null
 	
+
+func _update_player_transform() -> void:
+	#Transform traveller velocity, position, and orientation to new portal basis
+	var flip := Transform3D(Basis(Vector3.UP, PI), Vector3.ZERO)
+	var m = _linked_portal.global_transform * flip * global_transform.affine_inverse() * _current_traveler.global_transform
+	_current_traveler.global_position = m.origin
+	_current_traveler.velocity = m.basis * _current_traveler.velocity;
+	
+	#Calculate new yaw
+	_current_traveler.rotation.y = atan2(-m.basis.z.x, m.basis.z.z)
+	
+	#Transform pitch and roll
+	var head = _current_traveler.get_node("HeadAnchor")
+	var cam_m = _linked_portal.global_transform * flip * global_transform.affine_inverse() * head.global_transform
+	head.global_rotation.x = cam_m.basis.get_euler().x
+
 func register_traveller(body: CharacterBody3D) -> void:
 	_current_traveler = body;
 	_previous_offset = body.global_position - global_position;
