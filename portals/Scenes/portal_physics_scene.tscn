@@ -24,7 +24,7 @@ size = Vector3(3, 3, 5)
 size = Vector3(3, 3, 5)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_xolsh"]
-size = Vector3(2.0008545, 1.9675293, 0.75009155)
+size = Vector3(2.0008545, 1.9675293, 0.44789886)
 
 [node name="RenderCamerasScene" type="Node3D" unique_id=1997632050]
 
@@ -79,7 +79,7 @@ _linked_portal = NodePath("../../Portal 2")
 collision_mask = 2
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Portal 1/PortalPhysics/Area3D" unique_id=2086986743]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0049439073, -0.012817383, -0.12495422)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.004943967, -0.012817383, -0.21335602)
 shape = SubResource("BoxShape3D_xolsh")
 
 [node name="Portal 2" parent="." unique_id=1075828444 node_paths=PackedStringArray("_linked_portal") instance=ExtResource("3_hkw38")]
@@ -94,7 +94,7 @@ _linked_portal = NodePath("../../Portal 1")
 collision_mask = 2
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Portal 2/PortalPhysics/Area3D" unique_id=1936747385]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0049439073, -0.012817383, -0.12495422)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.004943967, -0.012817383, -0.18764889)
 shape = SubResource("BoxShape3D_xolsh")
 
 [connection signal="body_entered" from="Portal 1/PortalPhysics/Area3D" to="Portal 1/PortalPhysics" method="_on_area_3d_body_entered"]

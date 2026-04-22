@@ -22,23 +22,22 @@ func _process(delta: float) -> void:
 	#the players offset from the portal and the portals position
 	
 	#Calculate player offset from portal
-	var playerOffset = _current_traveler.global_position - global_position;
+	var playerOffset := _current_traveler.global_position - global_position;
 	
 	#Get which side of the portal the player is on
-	var portalSide = sign(playerOffset.dot(transform.basis.z));
+	var portalSide = sign(playerOffset.dot(global_transform.basis.z));
 	DebugDraw3D.draw_line(global_position, playerOffset, Color(1,0,0,1))
 	
 	var previousPortalSide = sign(
-			_previous_offset.dot(transform.basis.z)
+			_previous_offset.dot(global_transform.basis.z)
 		);
-		
-	print(portalSide)
 	
 	if (portalSide != previousPortalSide):
-		var m := _linked_portal.transform * global_transform * _current_traveler.transform
-		_current_traveler.position = m.basis[2]
+		var m = _linked_portal.global_transform * global_transform.affine_inverse() * _current_traveler.global_transform
+		_current_traveler.position = m.origin
 		_current_traveler.rotation = m.basis.get_euler()
-		
+		_current_traveler.velocity = m.basis * _current_traveler.velocity;
+	
 	#Cache old offset
 	_previous_offset = playerOffset;
 
@@ -49,7 +48,6 @@ func _on_area_3d_body_entered(body: Node3D) -> void:
 	
 	_current_traveler = body;
 	_previous_offset = _current_traveler.position - position
-	print("Added!")
 
 ##Remove current traveler
 func _on_area_3d_body_exited(body: Node3D) -> void:
@@ -57,4 +55,3 @@ func _on_area_3d_body_exited(body: Node3D) -> void:
 		return
 	
 	_current_traveler = null;
-	print("Removed!")
