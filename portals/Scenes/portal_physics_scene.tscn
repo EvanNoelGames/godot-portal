@@ -14,7 +14,7 @@ size = Vector3(20, 1, 20)
 size = Vector3(20, 1, 20)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_xolsh"]
-size = Vector3(2.0008545, 1.9675293, 0.036423296)
+size = Vector3(2.0008545, 1.9675293, 0.9098915)
 
 [node name="RenderCamerasScene" type="Node3D" unique_id=1997632050]
 
@@ -44,14 +44,16 @@ transform = Transform3D(-1, 0, 1.509958e-07, 0, 1, 0, -1.509958e-07, 0, -1, -0.5
 _linked_portal = NodePath("../Portal 2")
 
 [node name="PortalPhysics" type="Node3D" parent="Portal 1" unique_id=365443082 node_paths=PackedStringArray("_linked_portal")]
+process_priority = 100
+process_physics_priority = 100
 script = ExtResource("4_xolsh")
 _linked_portal = NodePath("../../Portal 2")
 
 [node name="Area3D" type="Area3D" parent="Portal 1/PortalPhysics" unique_id=854687049]
 collision_mask = 2
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Portal 1/PortalPhysics/Area3D" unique_id=1431131603]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0049444735, -0.012817383, -0.02196145)
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Portal 1/PortalPhysics/Area3D" unique_id=1077257878]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0049447715, -0.012817383, -0.20688534)
 shape = SubResource("BoxShape3D_xolsh")
 
 [node name="PortalGate" parent="Portal 1/PortalPhysics" unique_id=1689186447 instance=ExtResource("5_b3upj")]
@@ -62,6 +64,8 @@ transform = Transform3D(-3.934025e-07, 0, -1, 0, 1, 0, 1, 0, -3.934025e-07, 3.28
 _linked_portal = NodePath("../Portal 1")
 
 [node name="PortalPhysics" type="Node3D" parent="Portal 2" unique_id=2115299326 node_paths=PackedStringArray("_linked_portal")]
+process_priority = 100
+process_physics_priority = 100
 script = ExtResource("4_xolsh")
 _linked_portal = NodePath("../../Portal 1")
 
@@ -69,7 +73,7 @@ _linked_portal = NodePath("../../Portal 1")
 collision_mask = 2
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Portal 2/PortalPhysics/Area3D" unique_id=1936747385]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0049445033, -0.012817383, -0.045544147)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0049447417, -0.012817383, 0.027621984)
 shape = SubResource("BoxShape3D_xolsh")
 
 [node name="PortalGate" parent="Portal 2/PortalPhysics" unique_id=632675665 instance=ExtResource("5_b3upj")]
