@@ -34,6 +34,7 @@ _movement_settings = ExtResource("2_i2gj3")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Geometry/StaticBody3D" unique_id=15820420]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.24714875, 0)
 mesh = SubResource("BoxMesh_jaum6")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Geometry/StaticBody3D" unique_id=2027509814]
@@ -64,9 +65,9 @@ transform = Transform3D(1, 0, 0, 0, 0.70710677, 0.70710677, 0, -0.70710677, 0.70
 shadow_enabled = true
 
 [node name="Portal" parent="." unique_id=1438097116 node_paths=PackedStringArray("_linked_portal") instance=ExtResource("4_i2gj3")]
-transform = Transform3D(0.03126757, 0, -8.751831, 0, 1, 0, 0.4201612, 0, 0.65129405, 1.7477806, -0.20597231, -0.4119568)
+transform = Transform3D(-0.9998477, 0, -0.017452458, 0, 1, 0, 0.017452458, 0, -0.9998477, 0.61381555, 0.861289, 0.3741299)
 _linked_portal = NodePath("../Portal2")
 
 [node name="Portal2" parent="." unique_id=1066475844 node_paths=PackedStringArray("_linked_portal") instance=ExtResource("4_i2gj3")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.28604543, 2.3310342)
+transform = Transform3D(-0.99983466, 0, -0.018185437, 0, 1, 0, 0.018185437, 0, -0.99983466, -0.6972685, 1.183249, 1.1135869)
 _linked_portal = NodePath("../Portal")
