@@ -1,9 +1,16 @@
 shader_type spatial;
 render_mode blend_mix;
+
+uniform sampler2D screen_texture : hint_screen_texture;
 uniform sampler2D depth_texture : hint_depth_texture, repeat_disable, filter_nearest;
 
 uniform sampler2D noise_texture;
 uniform sampler2D viewport_texture; 
+
+uniform vec2 portal_pos;
+uniform float portal_distance;
+
+//varying vec2 portal_pos; 
 
 
 float saturate(float a)
@@ -14,13 +21,24 @@ float saturate(float a)
 void vertex() {
 	// Called for every vertex the material is visible on.
 	//v_world_pos = (MODEL_MATRIX * vec4(VERTEX, 1.0)).xyz;
+		
+		
+		vec4 clip_space = PROJECTION_MATRIX * MODELVIEW_MATRIX * vec4(VERTEX, 1.0);
+	
+		vec2 ndc = (clip_space.xy / clip_space.w) * 0.5 + 0.5;
+		
+		//portal_pos = ndc;
 }
 
 void fragment() {
 	// Called for every pixel the material is visible on.
+	vec3 ndc = vec3(SCREEN_UV * 2.0 - 1.0, FRAGCOORD.z);
+	
 	
 	// need the uv
-	vec2 portalUV = (SCREEN_UV - 0.5) * vec2(8.0, 2.5);
+	vec2 portalUV = (SCREEN_UV - portal_pos) * vec2(8.0, 2.5) / portal_distance * 0.3;
+	
+	vec2 remapped_portal_uv = portalUV * 0.5 + 0.5;
 	
 	vec2 tangent = normalize(portalUV);
 	
@@ -33,20 +51,35 @@ void fragment() {
 	vec2 polar = vec2((atan(portalUV.x, portalUV.y) / PI / 2.0 + 0.5) 
 	* 1.0  + TIME * - 0.05 , length(portalUV) * 0.25 + TIME * - 0.01);
 	
+	
 	// this needs to sample noise
 	vec2 turbulence = texture(noise_texture, polar).xy * 2.0 - 1.0;
 	
 	// this samples the ring
-	vec3 image = texture(viewport_texture, SCREEN_UV + turbulence * 0.005).rgb * 2.75; 
+	vec3 image = ring * vec3(0.15, 0.75, 1.0); 
 	
 	// this samples what was rendered to the screen the past frame
 	// only need this if i want it to distort what has already
 	// been rendered to the screen
-	//vec3 buffer = texture(viewport_texture, SCREEN_UV + turbulence * 0.0085 + vec2(tangent.y, -tangent.x) * vec2(2.65, 10.0) * 0.01).rgb * vec3(0.7, 0.75, 1.0);
 	
-	//vec3 col = mix(image, buffer, 0.75);
+	//vec2 offsetUV = portalUV + vec2(tangent.y, -tangent.x) * 0.1 + turbulence * vec2(2.65, 10.0);
+	vec2 offsetUV = portalUV + vec2(tangent.y, -tangent.x) * 0.1 + turbulence * 0.7;
+	
+	float offset_ring1 = saturate((1.0 - length(offsetUV)) * 20.0);
+	
+	float offset_ring2 = saturate((length(offsetUV * vec2(1.15, 1.125)) -1.025) * 20.0);
+	
+	float new_ring = min(offset_ring1, offset_ring2);
+	
+	vec3 buffer = new_ring * vec3(0.15, 0.75, 1.0) * vec3(0.7, 0.75, 1.0);
+	//vec3 buffer = texture(image, remapped_portal_uv + vec2(tangent.y, -tangent.x) * 0.1 * vec2(2.65, 10.0) * 0.2).rgb * 30.0 * vec3(0.7, 0.75, 1.0));
+	
+	
+	vec3 col = mix(image, buffer, 0.75);
 	ALPHA = ring;
-	ALBEDO = image;
+	//ALBEDO = texture(viewport_texture, remapped_portal_uv).rgb * 30.0;
+	ALBEDO = col;
+
 }
 
 //void light() {

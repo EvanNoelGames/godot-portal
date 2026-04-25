@@ -1,70 +1,56 @@
 [gd_scene format=3 uid="uid://nrjnkhls1bk4"]
 
 [ext_resource type="Script" uid="uid://r6yxmipwyf2w" path="res://Nodes/Portals/portal.gd" id="1_qljpf"]
-[ext_resource type="Shader" uid="uid://caewvotc8g3gn" path="res://Nodes/Portals/portal_swirl.gdshader" id="2_qljpf"]
 [ext_resource type="Shader" uid="uid://b0r6heqteswol" path="res://Nodes/Portals/portal_distortion.gdshader" id="2_w0p17"]
 [ext_resource type="Shader" uid="uid://d37x7uxpt6rv0" path="res://Nodes/Portals/portal_cutout.gdshader" id="4_yshqu"]
 
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_w0p17"]
-
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_yshqu"]
-noise = SubResource("FastNoiseLite_w0p17")
-
-[sub_resource type="ViewportTexture" id="ViewportTexture_yshqu"]
-viewport_path = NodePath("SubViewport")
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_v5dft"]
-resource_local_to_scene = true
-render_priority = 0
-shader = ExtResource("2_w0p17")
-shader_parameter/noise_texture = SubResource("NoiseTexture2D_yshqu")
-shader_parameter/viewport_texture = SubResource("ViewportTexture_yshqu")
-
-[sub_resource type="ViewportTexture" id="ViewportTexture_miqdc"]
-viewport_path = NodePath("SubViewport")
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_qljpf"]
-resource_local_to_scene = true
-render_priority = 0
-shader = ExtResource("2_qljpf")
-shader_parameter/viewport_texture = SubResource("ViewportTexture_miqdc")
-
-[sub_resource type="SphereMesh" id="SphereMesh_ni2kv"]
-material = SubResource("ShaderMaterial_qljpf")
-
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_yshqu"]
-render_priority = 0
-shader = ExtResource("2_qljpf")
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_miqdc"]
 resource_local_to_scene = true
 render_priority = 0
 shader = ExtResource("4_yshqu")
 
-[sub_resource type="PlaneMesh" id="PlaneMesh_m81mj"]
+[sub_resource type="PlaneMesh" id="PlaneMesh_v5dft"]
 resource_local_to_scene = true
-material = SubResource("ShaderMaterial_miqdc")
+material = SubResource("ShaderMaterial_yshqu")
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_v5dft"]
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_m81mj"]
+viewport_path = NodePath("SubViewport")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_nixo0"]
+resource_local_to_scene = true
+render_priority = 0
+shader = ExtResource("2_w0p17")
+shader_parameter/noise_texture = SubResource("NoiseTexture2D_v5dft")
+shader_parameter/viewport_texture = SubResource("ViewportTexture_m81mj")
+shader_parameter/portal_pos = Vector2(0, 0)
+shader_parameter/portal_distance = 0.0
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_npt0l"]
+material = SubResource("ShaderMaterial_nixo0")
 
 [node name="Portal" type="Node3D" unique_id=1438097116]
 script = ExtResource("1_qljpf")
 
 [node name="SubViewport" type="SubViewport" parent="." unique_id=1340857426]
 gui_disable_input = true
-size = Vector2i(3840, 2160)
+size = Vector2i(1280, 720)
+render_target_update_mode = 4
 
 [node name="Camera3D" type="Camera3D" parent="SubViewport" unique_id=980231044]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1.0135088)
+transform = Transform3D(1, 0, 0, 0, 1.2678372, 0, 0, 0, 1, 0, 1.5, 1)
+cull_mask = 1048570
 fov = 90.0
 near = 0.001
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="SubViewport" unique_id=546627379]
-transform = Transform3D(0.915, 0, 0, 0, 7.212379e-09, -1.875, 0, -0.165, -8.195885e-08, 0.00017811358, 0.027271941, -0.0063679516)
-material_overlay = SubResource("ShaderMaterial_v5dft")
-mesh = SubResource("SphereMesh_ni2kv")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1449874642]
-transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0)
-material_overlay = SubResource("ShaderMaterial_yshqu")
-mesh = SubResource("PlaneMesh_m81mj")
-
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1644907055]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=743910502]
+transform = Transform3D(2.6165333, 0, 0, 0, -7.6366035e-08, -1.7470512, 0, 1.7470512, -7.6366035e-08, 0, 1.5, 0)
+layers = 2
+mesh = SubResource("PlaneMesh_v5dft")
+
+[node name="DistortionInstance3D" type="MeshInstance3D" parent="." unique_id=904449894]
+transform = Transform3D(-2.948, 1.14226605e-05, 7.100107e-15, 0, -5.7113302e-06, 1.858, 2.5772235e-07, 130.66, 8.121576e-08, 0.023758277, 1.46, -0.022291064)
+mesh = SubResource("PlaneMesh_npt0l")
