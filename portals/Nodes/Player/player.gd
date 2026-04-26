@@ -7,6 +7,8 @@ extends CharacterBody3D
 @export var _allow_jump : bool = true
 @export var _allow_crouch : bool = true
 @export var _movement_settings : MovementSettings
+@export_group("References")
+@export var _camera : Camera3D
 
 var pressing_crouch : bool = false
 var crouching : bool = false
@@ -18,7 +20,6 @@ var wish_jump : bool = false
 @onready var _bounding_box : CollisionShape3D = $BoundingBox
 @onready var _rotation_helper = $HeadAnchor/RotationHelper
 @onready var _crouch_area : Area3D = $BoundingBox/CrouchArea
-@onready var _camera = $HeadAnchor/RotationHelper/CameraHolder/Camera
 
 #region Enter Tree, Ready, Process
 func _enter_tree() -> void:
