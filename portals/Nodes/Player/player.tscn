@@ -13,7 +13,7 @@ size = Vector3(0.75, 1.25, 0.75)
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_us8wf"]
 
-[node name="Player" type="CharacterBody3D" unique_id=1428363437]
+[node name="Player" type="CharacterBody3D" unique_id=1428363437 node_paths=PackedStringArray("_camera")]
 physics_interpolation_mode = 1
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
 collision_layer = 2097154
@@ -22,6 +22,7 @@ collision_priority = 5.0
 floor_constant_speed = true
 platform_floor_layers = 4292870142
 script = ExtResource("1_us8wf")
+_camera = NodePath("HeadAnchor/RotationHelper/CameraHolder/Camera")
 
 [node name="BoundingBox" type="CollisionShape3D" parent="." unique_id=1112672228 node_paths=PackedStringArray("top_parent")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.85, 0)
@@ -51,4 +52,3 @@ mesh = SubResource("CapsuleMesh_us8wf")
 [node name="CameraHolder" type="Node3D" parent="HeadAnchor/RotationHelper" unique_id=1439329297]
 
 [node name="Camera" type="Camera3D" parent="HeadAnchor/RotationHelper/CameraHolder" unique_id=1888675057]
-cull_mask = 1048573

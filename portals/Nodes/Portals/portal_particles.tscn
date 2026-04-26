@@ -9,12 +9,21 @@ point_count = 3
 [sub_resource type="CurveTexture" id="CurveTexture_2rkbk"]
 curve = SubResource("Curve_oxcat")
 
+[sub_resource type="Curve" id="Curve_4fdwl"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Curve" id="Curve_m0ji7"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
 [sub_resource type="Curve" id="Curve_leal7"]
-_limits = [-2.0, 2.0, 0.0, 1.0]
 _data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
 point_count = 2
 
 [sub_resource type="CurveXYZTexture" id="CurveXYZTexture_oxcat"]
+curve_x = SubResource("Curve_4fdwl")
+curve_y = SubResource("Curve_m0ji7")
 curve_z = SubResource("Curve_leal7")
 
 [sub_resource type="Curve" id="Curve_2rkbk"]
@@ -35,8 +44,8 @@ angle_min = -44.99999
 angle_max = 45.00001
 direction = Vector3(0, 0, 0)
 spread = 0.0
-initial_velocity_min = 0.29999998
-initial_velocity_max = 0.59999996
+initial_velocity_min = 0.59999996
+initial_velocity_max = 1.0
 orbit_velocity_min = 0.2000001
 orbit_velocity_max = 0.40000013
 orbit_velocity_curve = SubResource("CurveXYZTexture_oxcat")
@@ -51,6 +60,7 @@ hue_variation_min = -2.2351742e-08
 hue_variation_max = -2.2351742e-08
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_oxcat"]
+resource_local_to_scene = true
 transparency = 1
 blend_mode = 1
 cull_mode = 2
@@ -62,14 +72,13 @@ use_particle_trails = true
 distance_fade_max_distance = 1.0
 
 [sub_resource type="RibbonTrailMesh" id="RibbonTrailMesh_2rkbk"]
+resource_local_to_scene = true
 material = SubResource("StandardMaterial3D_oxcat")
 size = 0.2
 
-[node name="PortalParticles" type="Node3D" unique_id=1827278235]
-
-[node name="GPUParticles3D" type="GPUParticles3D" parent="." unique_id=1243338187]
+[node name="PortalParticles" type="GPUParticles3D" unique_id=1243338187]
 transform = Transform3D(1, 0, 0, 0, 1.4, 0, 0, 0, 1, 0, 0, 0)
-amount = 300
+amount = 200
 fixed_fps = 60
 trail_enabled = true
 trail_lifetime = 0.5

@@ -5,5 +5,6 @@ uniform sampler2D screen_texture : hint_screen_texture;
 uniform sampler2D portal_texture;
 
 void fragment() {
-    ALBEDO = texture(portal_texture, SCREEN_UV).rgb;
+	ALPHA = step(distance(UV, vec2(0.5, 0.5)), 0.5);
+	ALBEDO = texture(portal_texture, SCREEN_UV).rgb;
 }
