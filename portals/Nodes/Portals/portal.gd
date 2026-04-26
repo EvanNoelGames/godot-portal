@@ -17,6 +17,9 @@ const CAMERA_NEAR_SAFE_MARGIN : float = 0.05
 func _ready() -> void:
 	_camera.fov = _player_camera.fov
 
+func get_linked_portal() -> Portal:
+	return _linked_portal
+
 func _process(_delta: float) -> void:
 	if _linked_portal:
 		_move_camera()

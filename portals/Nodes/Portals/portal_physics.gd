@@ -48,7 +48,7 @@ func _update_player_transform() -> void:
 	var m = _linked_portal.global_transform * flip * global_transform.affine_inverse() * _current_traveler.global_transform
 	_current_traveler.global_position = m.origin
 	_current_traveler.global_rotation = m.basis.get_euler()
-	_current_traveler.linear_velocity = m.basis * _current_traveler.linear_velocity;
+	_current_traveler.velocity = m.basis * _current_traveler.velocity;
 
 func register_traveller(body: CharacterBody3D) -> void:
 	_current_traveler = body;
