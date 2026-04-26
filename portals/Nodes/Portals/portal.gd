@@ -8,19 +8,34 @@ const CAMERA_NEAR_SAFE_MARGIN : float = 0.05
 @export_group("References")
 @export var _linked_portal : Portal
 
+
+var _portal_pos : Vector2
+
 @onready var _camera : Camera3D = $SubViewport/Camera3D
 @onready var _sub_viewport : SubViewport = $SubViewport
 @onready var _mesh_instance : MeshInstance3D = $MeshInstance3D
+@onready var _distortion_instance : MeshInstance3D = $DistortionInstance3D
 @onready var _surface_material : ShaderMaterial = _mesh_instance.mesh.surface_get_material(0)
+@onready var _distortion_material : ShaderMaterial = _distortion_instance.mesh.surface_get_material(0)
+
 @onready var _player_camera : Camera3D = Global.player_node.get_camera()
 
 func _ready() -> void:
 	_camera.fov = _player_camera.fov
+	
+	
 
 func _process(_delta: float) -> void:
 	if _linked_portal:
 		_move_camera()
+		
+	_portal_pos = _player_camera.unproject_position(global_position)/ get_viewport().get_visible_rect().size
 	_surface_material.set_shader_parameter("portal_texture", _sub_viewport.get_texture())
+
+	_distortion_material.set_shader_parameter("portal_pos", _portal_pos)
+	
+	var distance = _player_camera.global_position.distance_to(global_position)
+	_distortion_material.set_shader_parameter("portal_distance", distance)
 
 func _move_camera() -> void:
 	var flip = Transform3D(Basis(Vector3.UP, PI), Vector3.ZERO)

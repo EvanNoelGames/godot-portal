@@ -51,3 +51,4 @@ mesh = SubResource("CapsuleMesh_us8wf")
 [node name="CameraHolder" type="Node3D" parent="HeadAnchor/RotationHelper" unique_id=1439329297]
 
 [node name="Camera" type="Camera3D" parent="HeadAnchor/RotationHelper/CameraHolder" unique_id=1888675057]
+cull_mask = 1048573
