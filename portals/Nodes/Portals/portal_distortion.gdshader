@@ -22,9 +22,7 @@ float saturate(float a)
 
 void vertex() {
 	// Called for every vertex the material is visible on.
-	//v_world_pos = (MODEL_MATRIX * vec4(VERTEX, 1.0)).xyz;
-		
-		
+
 		vec4 clip_space = PROJECTION_MATRIX * MODELVIEW_MATRIX * vec4(VERTEX, 1.0);
 	
 		vec2 ndc = (clip_space.xy / clip_space.w) * 0.5 + 0.5;
@@ -37,7 +35,6 @@ void vertex() {
 		);
 		MODELVIEW_MATRIX = modified_model_view;
 		
-		//portal_pos = ndc;
 }
 
 void fragment() {
@@ -68,11 +65,7 @@ void fragment() {
 	// this samples the ring
 	vec3 image = ring * vec3(0.0, 0.0, 0.0); 
 	
-	// this samples what was rendered to the screen the past frame
-	// only need this if i want it to distort what has already
-	// been rendered to the screen
 	
-	//vec2 offsetUV = portalUV + vec2(tangent.y, -tangent.x) * 0.1 + turbulence * vec2(2.65, 10.0);
 	vec2 offsetUV = portalUV + vec2(tangent.y, -tangent.x) * 0.1 + turbulence * 0.3;
 	
 	float offset_ring1 = saturate((1.0 - length(offsetUV)) * 20.0);
@@ -82,12 +75,9 @@ void fragment() {
 	float new_ring = min(offset_ring1, offset_ring2);
 	
 	vec3 buffer = new_ring * vec3(1.0, 0.4 , 0.0) * vec3(1.0, 0.4 , 0.0);
-	//vec3 buffer = texture(image, remapped_portal_uv + vec2(tangent.y, -tangent.x) * 0.1 * vec2(2.65, 10.0) * 0.2).rgb * 30.0 * vec3(0.7, 0.75, 1.0));
-	
-	
+
 	vec3 col = mix(image, buffer, 1.0);
 	ALPHA = ring;
-	//ALBEDO = texture(viewport_texture, remapped_portal_uv).rgb * 30.0;
 	ALBEDO = col;
 
 }

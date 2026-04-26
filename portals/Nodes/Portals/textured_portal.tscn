@@ -33,6 +33,7 @@ material = SubResource("ShaderMaterial_nixo0")
 orientation = 2
 
 [node name="Portal" type="Node3D" unique_id=1438097116]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 0, 0)
 script = ExtResource("1_qljpf")
 
 [node name="SubViewport" type="SubViewport" parent="." unique_id=1340857426]
@@ -54,5 +55,5 @@ layers = 2
 mesh = SubResource("PlaneMesh_v5dft")
 
 [node name="DistortionInstance3D" type="MeshInstance3D" parent="." unique_id=904449894]
-transform = Transform3D(-10, 1.509958e-06, 6.600236e-14, 0, -4.371139e-07, 10, 1.509958e-06, 10, 4.371139e-07, 0, 0, 0)
+transform = Transform3D(10, 0, 0, 0, -4.371139e-07, 10, 0, -10, -4.371139e-07, 0, 0, 0)
 mesh = SubResource("PlaneMesh_npt0l")

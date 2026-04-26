@@ -65,9 +65,9 @@ transform = Transform3D(1, 0, 0, 0, 0.70710677, 0.70710677, 0, -0.70710677, 0.70
 shadow_enabled = true
 
 [node name="Portal" parent="." unique_id=1438097116 node_paths=PackedStringArray("_linked_portal") instance=ExtResource("4_i2gj3")]
-transform = Transform3D(-0.9998477, 0, -0.017452458, 0, 1, 0, 0.017452458, 0, -0.9998477, 0.61381555, 0.861289, 0.3741299)
+transform = Transform3D(0.0017939811, 0.9999745, -0.006910249, 0.014093492, -0.006934856, -0.99987674, -0.99989927, 0.001696378, -0.014105572, 1.9201205, 1.4368094, -0.8576517)
 _linked_portal = NodePath("../Portal2")
 
 [node name="Portal2" parent="." unique_id=1066475844 node_paths=PackedStringArray("_linked_portal") instance=ExtResource("4_i2gj3")]
-transform = Transform3D(-0.99983466, 0, -0.018185437, 0, 1, 0, 0.018185437, 0, -0.99983466, -0.6972685, 1.183249, 1.1135869)
+transform = Transform3D(-0.999951, -0.00037397398, -0.009907024, -0.009910805, 0.012028903, 0.9998786, -0.00025476166, 0.9999278, -0.012032002, -0.72046375, 1.183249, 1.172075)
 _linked_portal = NodePath("../Portal")

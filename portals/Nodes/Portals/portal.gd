@@ -13,10 +13,8 @@ var _portal_pos : Vector2
 
 @onready var _camera : Camera3D = $SubViewport/Camera3D
 @onready var _sub_viewport : SubViewport = $SubViewport
-@onready var _sub_viewport3 : SubViewport = $SubViewport3
 @onready var _mesh_instance : MeshInstance3D = $MeshInstance3D
 @onready var _distortion_instance : MeshInstance3D = $DistortionInstance3D
-@onready var _plane_instance : MeshInstance3D= $SubViewport3/MeshInstance3D
 @onready var _surface_material : ShaderMaterial = _mesh_instance.mesh.surface_get_material(0)
 @onready var _distortion_material : ShaderMaterial = _distortion_instance.mesh.surface_get_material(0)
 
