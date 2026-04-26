@@ -1,4 +1,4 @@
-class_name PortalPhysics 
+class_name Portal_Physics 
 extends Node3D
 
 @export_group("References")
@@ -37,7 +37,7 @@ func _physics_process(delta: float) -> void:
 	
 	if (portalSide != previousPortalSide && previousPortalSide != 0):
 		_update_player_transform()
-		var linked_physics = _linked_portal.get_node("PortalPhysics") as PortalPhysics
+		var linked_physics = _linked_portal.get_node("PortalPhysics") as Portal_Physics
 		linked_physics.call_deferred("register_traveller", _current_traveler)
 		_current_traveler = null
 	
@@ -48,7 +48,7 @@ func _update_player_transform() -> void:
 	var m = _linked_portal.global_transform * flip * global_transform.affine_inverse() * _current_traveler.global_transform
 	_current_traveler.global_position = m.origin
 	_current_traveler.global_rotation = m.basis.get_euler()
-	_current_traveler.velocity = m.basis * _current_traveler.velocity;
+	_current_traveler.linear_velocity = m.basis * _current_traveler.linear_velocity;
 
 func register_traveller(body: CharacterBody3D) -> void:
 	_current_traveler = body;

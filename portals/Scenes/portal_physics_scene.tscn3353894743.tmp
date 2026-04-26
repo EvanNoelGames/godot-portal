@@ -3,94 +3,15 @@
 [ext_resource type="PackedScene" uid="uid://df26ys1e57l2l" path="res://Nodes/Player/player.tscn" id="1_viwfn"]
 [ext_resource type="Resource" uid="uid://d2jli0ii2guhf" path="res://Nodes/Resources/movement_settings/base_movement_settings.tres" id="2_xolsh"]
 [ext_resource type="PackedScene" uid="uid://jac2uuqov6um" path="res://Nodes/Portals/portal.tscn" id="3_hkw38"]
+[ext_resource type="Script" uid="uid://bcg1b7m1mpils" path="res://portal_physics.gd" id="4_xolsh"]
 [ext_resource type="PackedScene" uid="uid://cf2snquamuaak" path="res://Models/PortalGate.fbx" id="5_b3upj"]
 [ext_resource type="ArrayMesh" uid="uid://c5md4al0hkrxl" path="res://Models/suzanne.obj" id="5_hkw38"]
-[ext_resource type="Script" uid="uid://ckjb0fnyc27kw" path="res://Nodes/Player/physics_object.gd" id="6_b3upj"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_jaum6"]
 size = Vector3(20, 1, 20)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_fp515"]
 size = Vector3(20, 1, 20)
-
-[sub_resource type="GDScript" id="GDScript_hkw38"]
-script/source = "class_name PortalPhysics
-extends Node3D
-
-@export_group(\"References\")
-@export var _linked_portal : Portal
-@onready var portal_1: Portal = $\"..\"
-
-var _current_traveler : CharacterBody3D
-
-var _previous_offset = Vector3(0.0,0.0,0.0)
-
-var _just_recieved_traveller := false
-
-func _physics_process(delta: float) -> void:
-	if _just_recieved_traveller:
-		_just_recieved_traveller = false
-		return
-	
-	#DebugDraw3D.draw_ray(global_position, global_transform.basis.z, 2, Color.BLACK)
-	if (_current_traveler == null):
-		return
-	
-	#Calculate player offset from portal
-	var playerOffset := _current_traveler.global_position - global_position
-	
-	#Get which side of the portal the player is on
-	var portalSide = sign(playerOffset.dot(global_transform.basis.z))
-	var previousPortalSide = sign(_previous_offset.dot(global_transform.basis.z))
-		
-	print(\"side: %d  prev: %d  offset: %s\" % [portalSide, previousPortalSide, playerOffset])
-	#Cache old offset
-	_previous_offset = playerOffset;
-	
-	#Stop entry from back side of portal
-	#if (portalSide > 0):
-		#return
-	
-	if (portalSide != previousPortalSide && previousPortalSide != 0):
-		_update_player_transform()
-		var linked_physics = _linked_portal.get_node(\"PortalPhysics\") as PortalPhysics
-		linked_physics.call_deferred(\"register_traveller\", _current_traveler)
-		_current_traveler = null
-	
-
-func _update_player_transform() -> void:
-	#Transform traveller velocity, position, and orientation to new portal basis
-	var flip := Transform3D(Basis(Vector3.UP, PI), Vector3.ZERO)
-	var m = _linked_portal.global_transform * flip * global_transform.affine_inverse() * _current_traveler.global_transform
-	_current_traveler.global_position = m.origin
-	_current_traveler.global_rotation = m.basis.get_euler()
-	_current_traveler.velocity = m.basis * _current_traveler.velocity;
-
-func register_traveller(body: CharacterBody3D) -> void:
-	_current_traveler = body;
-	_previous_offset = body.global_position - global_position;
-	_just_recieved_traveller = true
-
-##Add player to current traveler
-func _on_area_3d_body_entered(body: Node3D) -> void:
-	if (body is not CharacterBody3D):
-		return
-		
-	if (_current_traveler == body):
-		return
-		
-	if (_just_recieved_traveller):
-		return
-	
-	register_traveller(body)
-
-##Remove current traveler
-func _on_area_3d_body_exited(body: Node3D) -> void:
-	if (body is not CharacterBody3D):
-		return
-	
-	_current_traveler = null;
-"
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_xolsh"]
 size = Vector3(2.0008545, 1.9675293, 0.102017686)
@@ -128,7 +49,7 @@ _linked_portal = NodePath("../Portal 2")
 [node name="PortalPhysics" type="Node3D" parent="Portal 1" unique_id=365443082 node_paths=PackedStringArray("_linked_portal")]
 process_priority = 100
 process_physics_priority = 100
-script = SubResource("GDScript_hkw38")
+script = ExtResource("4_xolsh")
 _linked_portal = NodePath("../../Portal 2")
 
 [node name="Area3D" type="Area3D" parent="Portal 1/PortalPhysics" unique_id=854687049]
@@ -148,7 +69,7 @@ _linked_portal = NodePath("../Portal 1")
 [node name="PortalPhysics" type="Node3D" parent="Portal 2" unique_id=2115299326 node_paths=PackedStringArray("_linked_portal")]
 process_priority = 100
 process_physics_priority = 100
-script = SubResource("GDScript_hkw38")
+script = ExtResource("4_xolsh")
 _linked_portal = NodePath("../../Portal 1")
 
 [node name="Area3D" type="Area3D" parent="Portal 2/PortalPhysics" unique_id=1133017880]
@@ -162,13 +83,13 @@ shape = SubResource("BoxShape3D_xolsh")
 transform = Transform3D(2.244525e-08, 0, -0.24406587, 0, 0.14381805, 0, 0.115276955, 0, 4.752137e-08, 0, -1.1447405, 0)
 
 [node name="Portal 3" parent="." unique_id=40342601 node_paths=PackedStringArray("_linked_portal") instance=ExtResource("3_hkw38")]
-transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 6.3436656, 1.0998011, -1.9185023)
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 6.3436656, 0.07010198, -1.9185023)
 _linked_portal = NodePath("../Portal 4")
 
 [node name="PortalPhysics" type="Node3D" parent="Portal 3" unique_id=1836799407 node_paths=PackedStringArray("_linked_portal")]
 process_priority = 100
 process_physics_priority = 100
-script = SubResource("GDScript_hkw38")
+script = ExtResource("4_xolsh")
 _linked_portal = NodePath("../../Portal 1")
 
 [node name="Area3D" type="Area3D" parent="Portal 3/PortalPhysics" unique_id=1936675042]
@@ -182,13 +103,13 @@ shape = SubResource("BoxShape3D_xolsh")
 transform = Transform3D(2.244525e-08, 0, -0.24406587, 0, 0.14381805, 0, 0.115276955, 0, 4.752137e-08, 0, -1.1447405, 0)
 
 [node name="Portal 4" parent="." unique_id=2136217414 node_paths=PackedStringArray("_linked_portal") instance=ExtResource("3_hkw38")]
-transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 6.3436656, 1.0998011, 2.0814977)
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 6.3436656, 0.07010198, 2.0814977)
 _linked_portal = NodePath("../Portal 3")
 
 [node name="PortalPhysics" type="Node3D" parent="Portal 4" unique_id=8564943 node_paths=PackedStringArray("_linked_portal")]
 process_priority = 100
 process_physics_priority = 100
-script = SubResource("GDScript_hkw38")
+script = ExtResource("4_xolsh")
 _linked_portal = NodePath("../../Portal 1")
 
 [node name="Area3D" type="Area3D" parent="Portal 4/PortalPhysics" unique_id=533648145]
@@ -205,19 +126,15 @@ transform = Transform3D(2.244525e-08, 0, -0.24406587, 0, 0.14381805, 0, 0.115276
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -5.6709814, 0.984375, -0.42974472)
 mesh = ExtResource("5_hkw38")
 
-[node name="CharacterBody3D" type="CharacterBody3D" parent="." unique_id=1542702436]
+[node name="RigidBody3D" type="RigidBody3D" parent="." unique_id=729529903]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 6.530541, 3.1372595, -1.7728634)
-visible = false
-collision_layer = 3
-script = ExtResource("6_b3upj")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="CharacterBody3D" unique_id=1742273256]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RigidBody3D" unique_id=1742273256]
 transform = Transform3D(1, 0, 1.0658141e-14, 0, 1, 0, -1.0658141e-14, 0, 1, 0, 0, 0)
 shape = SubResource("SphereShape3D_b3upj")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="CharacterBody3D" unique_id=873286659]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="RigidBody3D" unique_id=873286659]
 transform = Transform3D(0.5026173, 0, 0, 0, 0.5026173, 0, 0, 0, 0.5026173, 0, 0, 0)
-layers = 2
 mesh = ExtResource("5_hkw38")
 
 [connection signal="body_entered" from="Portal 1/PortalPhysics/Area3D" to="Portal 1/PortalPhysics" method="_on_area_3d_body_entered"]
