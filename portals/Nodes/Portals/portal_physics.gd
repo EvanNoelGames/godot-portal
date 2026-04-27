@@ -1,7 +1,6 @@
 class_name Portal_Physics 
 extends Node3D
 
-@export_group("References")
 var _linked_portal : Portal
 
 var _current_traveler : CharacterBody3D
@@ -11,6 +10,8 @@ var _position_last_frame : Vector3
 var _just_recieved_traveller := false
 
 var _wall_collider : CollisionShape3D
+
+@onready var _wall_raycast = $"RayCast3D"
 
 const FLIP := Transform3D(Basis(Vector3.UP, PI), Vector3.ZERO)
 
@@ -22,15 +23,21 @@ func _ready() -> void:
 
 
 func _physics_process(delta: float) -> void:
-	
 	#Try to get wall collider behind portal
+	_get_wall_collider()
+	
+	if (_wall_collider == null):
+		return
 	
 	if _just_recieved_traveller:
 		_just_recieved_traveller = false
 		return
 		
 	if (_current_traveler == null):
+		_wall_collider.disabled = false
 		return
+	
+	_wall_collider.disabled = true
 	
 	#Calculate player offset from portal
 	var player_offset : Vector3 = _current_traveler.global_position - self.global_position
@@ -38,8 +45,8 @@ func _physics_process(delta: float) -> void:
 	var forward : Vector3 = self.global_transform.basis.z
 	
 	#Debug visualization
-	DebugDraw3D.draw_line(global_position, global_position + player_offset, Color.BLUE)
-	DebugDraw3D.draw_line(global_position, global_position + previous_offset, Color.RED)
+	#DebugDraw3D.draw_line(global_position, global_position + player_offset, Color.BLUE)
+	#DebugDraw3D.draw_line(global_position, global_position + previous_offset, Color.RED)
 	
 	#Get which side of the portal the player is on
 	var portal_side = _clamped_sign(player_offset.dot(forward))
@@ -61,17 +68,13 @@ func _get_wall_collider() -> void:
 	if (_wall_collider != null):
 		return
 	
-	var space_state = get_world_3d().direct_space_state
-	var origin = self.global_position
-	var end = self.global_position + (-self.transform.basis.z) * RAY_LENGTH
-	var query = PhysicsRayQueryParameters3D.create(origin, end)
-	query.collide_with_bodies = true
+	if (!_wall_raycast.is_colliding()):
+		return
 	
-	var result = space_state.intersect_ray(query)
+	var wall = _wall_raycast.get_collider()
 	
-	if (result is StaticBody3D):
-		_wall_collider = result
-
+	if (wall is CollisionObject3D):
+		_wall_collider = wall.get_node("CollisionShape3D") 
 
 ##Used to prevent edge case of sign being zero
 func _clamped_sign(value : float) -> int:

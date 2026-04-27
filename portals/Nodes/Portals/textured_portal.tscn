@@ -50,7 +50,7 @@ material = SubResource("StandardMaterial3D_m81mj")
 size = 0.2
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_npt0l"]
-size = Vector3(1.5265808, 1.9675293, 0.62420243)
+size = Vector3(1.5265808, 1.9675293, 0.029386371)
 
 [node name="Portal" type="Node3D" unique_id=1438097116]
 script = ExtResource("1_qljpf")
@@ -88,8 +88,12 @@ script = ExtResource("6_miqdc")
 collision_mask = 2
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="PortalPhysics/Area3D" unique_id=1623359615]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.016921073, -0.012817383, 0.31120414)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.016921073, -0.012817383, 0.013796091)
 shape = SubResource("BoxShape3D_npt0l")
+
+[node name="RayCast3D" type="RayCast3D" parent="PortalPhysics" unique_id=1517290039]
+target_position = Vector3(0, 0, -1)
+hit_from_inside = true
 
 [connection signal="body_entered" from="PortalPhysics/Area3D" to="PortalPhysics" method="_on_area_3d_body_entered"]
 [connection signal="body_exited" from="PortalPhysics/Area3D" to="PortalPhysics" method="_on_area_3d_body_exited"]
