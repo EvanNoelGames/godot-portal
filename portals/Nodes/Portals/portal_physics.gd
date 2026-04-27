@@ -5,7 +5,7 @@ extends Node3D
 
 @onready var _wall_raycast = $"RayCast3D"
 
-@onready var _rotation_helper = Global.player_node.get_camera().get_node("../..") as Node3D
+@onready var _rotation_helper : Node3D = Global.player_node.get_camera().get_node("..")
 
 var _current_traveler : CharacterBody3D
 
@@ -23,7 +23,7 @@ const RAY_LENGTH = 1.0
 
 const CAMERA_SMOOTH_SPEED = 10.0
 
-const CAMERA_LERP_TIME = 1.5
+const CAMERA_LERP_TIME = 0.3
 
 func init_portal() -> void:
 	_wall_collider = null
@@ -37,6 +37,8 @@ func _process(delta: float) -> void:
 		_wall_collider.disabled = false
 	else:
 		_wall_collider.disabled = true
+		
+	#_rotation_helper.rotation.x = lerp_angle(_rotation_helper.rotation.x, _target_camera_x, delta * CAMERA_LERP_TIME)
 
 
 func _physics_process(delta: float) -> void:
@@ -118,9 +120,13 @@ func _update_player_transform(traveler : CharacterBody3D) -> void:
 	_current_traveler.velocity = portal_matrix.basis * _current_traveler.velocity;
 	
 	#Rotate camera x-axis after exitting portal
-	_target_camera_x = traveler_matrix.basis.get_euler().x
-	var camera_rotate_tween = create_tween()
-	camera_rotate_tween.tween_property(_rotation_helper, "rotation.x", _target_camera_x, CAMERA_LERP_TIME)
+	#lerp_angle(rotation.y, atan2(-direction.x, -direction.z), delta * SMOOTH_SPEED)
+	
+	#_current_traveler.look_at(_current_traveler.global_position, _linked_portal.global_transform.basis.z, true)
+	
+	#_target_camera_x = traveler_matrix.basis.get_euler().x
+	#var camera_rotate_tween = create_tween()
+	#camera_rotate_tween.tween_property(_rotation_helper, "rotation", Vector3(0, _target_camera_x, 0), CAMERA_LERP_TIME)
 
 
 

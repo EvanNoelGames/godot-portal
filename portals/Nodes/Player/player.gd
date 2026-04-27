@@ -4,7 +4,6 @@ extends CharacterBody3D
 @export_group("Settings")
 @export var _sensitivity : float = 3.0
 @export_group("Movement")
-@export var _dash_speed : float = 50.0
 @export var _allow_dash : bool = true
 @export var _allow_jump : bool = true
 @export var _allow_crouch : bool = true
@@ -121,7 +120,7 @@ func update_velocity_ground(wish_dir: Vector3, delta: float):
 		return accelerate(wish_dir, _movement_settings.max_velocity_crouch, delta)
 		
 	if dashing:
-		return accelerate(wish_dir, _dash_speed, delta)
+		return accelerate(wish_dir, _movement_settings.sprint_speed, delta)
 	
 	return accelerate(wish_dir, _movement_settings.max_velocity_ground, delta)
 

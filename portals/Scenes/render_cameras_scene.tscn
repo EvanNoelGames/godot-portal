@@ -25,7 +25,7 @@ size = Vector3(3, 3, 5)
 [node name="RenderCamerasScene" type="Node3D" unique_id=1997632050]
 
 [node name="Portal 1" parent="." unique_id=1438097116 node_paths=PackedStringArray("_linked_portal") instance=ExtResource("1_phav4")]
-transform = Transform3D(-1, 0, -1.509958e-07, 0, 1, 0, 1.509958e-07, 0, -1, -0.35499215, 1.3795819, 1.499)
+transform = Transform3D(-1, 0, -1.509958e-07, 0, 1, 0, 1.509958e-07, 0, -1, -0.35499215, 1.3795819, 1.4810728)
 _portal_color = Color(0, 0, 1, 1)
 _linked_portal = NodePath("../Portal 2")
 
@@ -36,7 +36,6 @@ _linked_portal = NodePath("../Portal 1")
 
 [node name="Player" parent="." unique_id=1428363437 instance=ExtResource("1_81tfx")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
-_dash_speed = 1500.0
 _movement_settings = ExtResource("2_gd0cj")
 
 [node name="Geometry" type="Node3D" parent="." unique_id=145330962]

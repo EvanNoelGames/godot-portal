@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://nrjnkhls1bk4"]
 
 [ext_resource type="Script" uid="uid://r6yxmipwyf2w" path="res://Nodes/Portals/portal.gd" id="1_qljpf"]
-[ext_resource type="Shader" path="res://Nodes/Portals/portal_distortion.gdshader" id="2_w0p17"]
+[ext_resource type="Shader" uid="uid://b0r6heqteswol" path="res://Nodes/Portals/portal_distortion.gdshader" id="2_w0p17"]
 [ext_resource type="PackedScene" uid="uid://2ouo4ngebiq3" path="res://Scenes/portal_particles.tscn" id="4_v5dft"]
 [ext_resource type="Shader" uid="uid://d37x7uxpt6rv0" path="res://Nodes/Portals/portal_cutout.gdshader" id="4_yshqu"]
 [ext_resource type="Texture2D" uid="uid://bevqxpy77pjc3" path="res://Textures/T_VFX_Flare_16.PNG" id="5_v5dft"]
@@ -96,6 +96,7 @@ shape = SubResource("BoxShape3D_npt0l")
 [node name="RayCast3D" type="RayCast3D" parent="PortalPhysics" unique_id=1517290039]
 target_position = Vector3(0, 0, -1)
 hit_from_inside = true
+debug_shape_custom_color = Color(1, 0, 0, 1)
 
 [node name="SafetyStaticBody3D" type="StaticBody3D" parent="." unique_id=1145556856 groups=["portal"]]
 collision_layer = 4

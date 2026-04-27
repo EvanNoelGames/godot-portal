@@ -8,6 +8,7 @@ extends Resource
 @export var max_velocity_crouch : float = 2.0
 @export var terminal_velocity_y : float = 80.0
 @export var stop_speed : float = 1.5
+@export var sprint_speed : float = 50.0
 
 var max_acceleration : float = 12 * max_velocity_ground
 var jump_impulse : float = sqrt(2 * gravity * 0.85)
