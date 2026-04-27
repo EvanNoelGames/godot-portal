@@ -9,15 +9,21 @@ extends Node3D
 
 var _current_traveler : CharacterBody3D
 
+var _wall_collider : CollisionShape3D
+
 var _position_last_frame : Vector3
 
-var _just_recieved_traveller := false
+var _just_recieved_traveller = false
 
-var _wall_collider : CollisionShape3D
+var _target_camera_x = 0.0
 
 const FLIP := Transform3D(Basis(Vector3.UP, PI), Vector3.ZERO)
 
-const RAY_LENGTH = 1
+const RAY_LENGTH = 1.0
+
+const CAMERA_SMOOTH_SPEED = 10.0
+
+const CAMERA_LERP_TIME = 1.5
 
 func init_portal() -> void:
 	_wall_collider = null
@@ -111,8 +117,11 @@ func _update_player_transform(traveler : CharacterBody3D) -> void:
 	#Apply velocity transformation
 	_current_traveler.velocity = portal_matrix.basis * _current_traveler.velocity;
 	
-	#Rotate camera x and z-axis after exitting portal
-	_rotation_helper.rotation.x += traveler_matrix.basis.get_euler().x
+	#Rotate camera x-axis after exitting portal
+	_target_camera_x = traveler_matrix.basis.get_euler().x
+	var camera_rotate_tween = create_tween()
+	camera_rotate_tween.tween_property(_rotation_helper, "rotation.x", _target_camera_x, CAMERA_LERP_TIME)
+
 
 
 ##Sets current traveler and signals that a traveler was recieved
