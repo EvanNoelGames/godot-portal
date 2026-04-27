@@ -69,8 +69,10 @@ mesh = SubResource("PlaneMesh_m81mj")
 
 [node name="DistortionInstance3D" type="MeshInstance3D" parent="." unique_id=904449894]
 transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, 0, 0, 0.01)
+layers = 2
 mesh = SubResource("PlaneMesh_npt0l")
 
 [node name="PortalParticles" parent="." unique_id=1827278235 instance=ExtResource("4_v5dft")]
 transform = Transform3D(0.4, 0, 0, 0, 0.6, 0, 0, 0, 0.4, 0, 0, 0.015)
+layers = 2
 draw_pass_1 = SubResource("RibbonTrailMesh_miqdc")
