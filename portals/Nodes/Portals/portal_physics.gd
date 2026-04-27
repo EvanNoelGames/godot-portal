@@ -10,7 +10,11 @@ var _position_last_frame : Vector3
 
 var _just_recieved_traveller := false
 
+var _wall_collider : CollisionShape3D
+
 const FLIP := Transform3D(Basis(Vector3.UP, PI), Vector3.ZERO)
+
+const RAY_LENGTH = 1
 
 func _ready() -> void:
 	var parentPortal = get_parent() as Portal
@@ -18,6 +22,9 @@ func _ready() -> void:
 
 
 func _physics_process(delta: float) -> void:
+	
+	#Try to get wall collider behind portal
+	
 	if _just_recieved_traveller:
 		_just_recieved_traveller = false
 		return
@@ -30,33 +37,51 @@ func _physics_process(delta: float) -> void:
 	var previous_offset : Vector3 = _position_last_frame - self.global_position
 	var forward : Vector3 = self.global_transform.basis.z
 	
-	DebugDraw3D.draw_line(global_position, player_offset, Color.BLUE)
-	DebugDraw3D.draw_line(global_position, previous_offset, Color.RED)
+	#Debug visualization
+	DebugDraw3D.draw_line(global_position, global_position + player_offset, Color.BLUE)
+	DebugDraw3D.draw_line(global_position, global_position + previous_offset, Color.RED)
 	
 	#Get which side of the portal the player is on
 	var portal_side = _clamped_sign(player_offset.dot(forward))
 	var previous_portal_side = _clamped_sign(previous_offset.dot(forward))
-		
+	
 	print("side: %d  prev: %d  offset: %s" % [portal_side, previous_portal_side, player_offset])
 	
-	if (portal_side != previous_portal_side && previous_portal_side != 0):
-		_update_player_transform()
+	_position_last_frame = _current_traveler.global_position
+	
+	if (portal_side != previous_portal_side):
+		_update_player_transform(_current_traveler)
 		var linked_physics = _linked_portal.get_node("PortalPhysics") as Portal_Physics
 		linked_physics.call_deferred("register_traveller", _current_traveler)
 		_current_traveler = null
-		
-	_position_last_frame = _current_traveler.global_position
+
+
+##Tries to get wall collider behind portal
+func _get_wall_collider() -> void:
+	if (_wall_collider != null):
+		return
+	
+	var space_state = get_world_3d().direct_space_state
+	var origin = self.global_position
+	var end = self.global_position + (-self.transform.basis.z) * RAY_LENGTH
+	var query = PhysicsRayQueryParameters3D.create(origin, end)
+	query.collide_with_bodies = true
+	
+	var result = space_state.intersect_ray(query)
+	
+	if (result is StaticBody3D):
+		_wall_collider = result
 
 
 ##Used to prevent edge case of sign being zero
-func _clamped_sign(value : int) -> int:
+func _clamped_sign(value : float) -> int:
 	var x = sign(value)
 	if (x == 0):
-		x = 1
+		x = -1
 	return x
 
 ##Uses change of basis to modify player position and velocity around new portal transform
-func _update_player_transform() -> void:
+func _update_player_transform(traveler : CharacterBody3D) -> void:
 	#Transform traveller velocity, position, and orientation to new portal basis
 	var m = _linked_portal.global_transform * FLIP * global_transform.affine_inverse() * _current_traveler.global_transform
 	_current_traveler.global_position = m.origin
@@ -64,13 +89,14 @@ func _update_player_transform() -> void:
 	_current_traveler.velocity = m.basis * _current_traveler.velocity;
 
 
+##Sets current traveler and signals that a traveler was recieved
 func register_traveller(body: CharacterBody3D) -> void:
 	_current_traveler = body;
 	_position_last_frame = body.global_position
 	_just_recieved_traveller = true
 
 
-##Add player to current traveler
+##Called when something enters the Area3D
 func _on_area_3d_body_entered(body: Node3D) -> void:
 	if (body is not CharacterBody3D):
 		return

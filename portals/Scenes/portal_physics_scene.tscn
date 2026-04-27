@@ -62,12 +62,12 @@ layers = 2
 mesh = ExtResource("5_hkw38")
 
 [node name="Portal" parent="." unique_id=1438097116 node_paths=PackedStringArray("_linked_portal") instance=ExtResource("5_b3upj")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2710261, -2.8196995)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2710261, -2.7857776)
 _portal_color = Color(0.8623186, 0.37755942, 0, 1)
 _linked_portal = NodePath("../Portal2")
 
 [node name="Portal2" parent="." unique_id=270928141 node_paths=PackedStringArray("_linked_portal") instance=ExtResource("5_b3upj")]
-transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 0, 1.2710261, 3.054619)
+transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 0, 1.2710261, 3.0492797)
 _portal_color = Color(0.27095604, 0.9999997, 0.9214636, 1)
 _linked_portal = NodePath("../Portal")
 
