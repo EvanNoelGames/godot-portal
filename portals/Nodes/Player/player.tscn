@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://crju1ifyw5dyf" path="res://Nodes/Player/player.gd" id="1_us8wf"]
 [ext_resource type="Script" uid="uid://ceoyjy5m2ulki" path="res://Nodes/Player/ignore_rotate.gd" id="2_lkjqq"]
 [ext_resource type="PackedScene" uid="uid://b1pqkq54nl5f0" path="res://Nodes/Portals/portal_gun.tscn" id="3_lkjqq"]
+[ext_resource type="Shader" uid="uid://dhq8gw6rtntgh" path="res://Shaders/KuwaharaFilter.gdshader" id="3_q1ymb"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_5s528"]
 resource_local_to_scene = true
@@ -13,6 +14,18 @@ resource_local_to_scene = true
 size = Vector3(0.75, 1.25, 0.75)
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_us8wf"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_q1ymb"]
+shader = ExtResource("3_q1ymb")
+shader_parameter/kernelSize = 15
+
+[sub_resource type="QuadMesh" id="QuadMesh_p1mg8"]
+flip_faces = true
+size = Vector2(2, 2)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_sldgk"]
+shader = ExtResource("3_q1ymb")
+shader_parameter/kernelSize = 15
 
 [node name="Player" type="CharacterBody3D" unique_id=1428363437 node_paths=PackedStringArray("_camera")]
 physics_interpolation_mode = 1
@@ -53,5 +66,22 @@ mesh = SubResource("CapsuleMesh_us8wf")
 [node name="CameraHolder" type="Node3D" parent="HeadAnchor/RotationHelper" unique_id=1439329297]
 
 [node name="Camera" type="Camera3D" parent="HeadAnchor/RotationHelper/CameraHolder" unique_id=1888675057]
+
+[node name="KuwaharaFilter" type="MeshInstance3D" parent="HeadAnchor/RotationHelper/CameraHolder/Camera" unique_id=1799152647]
+transform = Transform3D(1, 0, -1.7484555e-07, 0, 1, 0, 1.7484555e-07, 0, 1, 0, 0, -0.7580174)
+visible = false
+material_override = SubResource("ShaderMaterial_q1ymb")
+extra_cull_margin = 16384.0
+mesh = SubResource("QuadMesh_p1mg8")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="HeadAnchor/RotationHelper/CameraHolder/Camera" unique_id=906774887]
+
+[node name="ColorRect" type="ColorRect" parent="HeadAnchor/RotationHelper/CameraHolder/Camera/CanvasLayer" unique_id=1757301442]
+material = SubResource("ShaderMaterial_sldgk")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 
 [node name="PortalGun" parent="HeadAnchor/RotationHelper/CameraHolder" unique_id=258161413 instance=ExtResource("3_lkjqq")]

@@ -3,6 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://df26ys1e57l2l" path="res://Nodes/Player/player.tscn" id="1_81tfx"]
 [ext_resource type="PackedScene" uid="uid://nrjnkhls1bk4" path="res://Nodes/Portals/textured_portal.tscn" id="1_phav4"]
 [ext_resource type="Resource" uid="uid://d2jli0ii2guhf" path="res://Nodes/Resources/movement_settings/base_movement_settings.tres" id="2_gd0cj"]
+[ext_resource type="ArrayMesh" uid="uid://c5md4al0hkrxl" path="res://Models/suzanne.obj" id="4_phav4"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_jaum6"]
 size = Vector3(20, 1, 20)
@@ -21,6 +22,8 @@ size = Vector3(3, 3, 5)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_6vl20"]
 size = Vector3(3, 3, 5)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_phav4"]
 
 [node name="RenderCamerasScene" type="Node3D" unique_id=1997632050]
 
@@ -99,3 +102,8 @@ shape = SubResource("BoxShape3D_6vl20")
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="Lights" unique_id=1624867225]
 transform = Transform3D(1, 0, 0, 0, 0.70710677, 0.70710677, 0, -0.70710677, 0.70710677, 0, 5.5, 0)
 shadow_enabled = true
+
+[node name="Suzanne" type="MeshInstance3D" parent="." unique_id=642088600]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.7488556, 1.0173612, -4.5881815)
+material_override = SubResource("StandardMaterial3D_phav4")
+mesh = ExtResource("4_phav4")

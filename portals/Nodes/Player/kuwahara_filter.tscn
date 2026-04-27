@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://dxeviajkfon18"]
+
+[ext_resource type="Shader" uid="uid://dhq8gw6rtntgh" path="res://Shaders/KuwaharaFilter.gdshader" id="1_2s32n"]
+
+[sub_resource type="QuadMesh" id="QuadMesh_p1mg8"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_p1mg8"]
+render_priority = 0
+shader = ExtResource("1_2s32n")
+shader_parameter/kernelSize = 15
+shader_parameter/offset = Vector3(0, 0, 0)
+
+[node name="KuwaharaFilter" type="MeshInstance3D" unique_id=1799152647]
+extra_cull_margin = 16384.0
+mesh = SubResource("QuadMesh_p1mg8")
+surface_material_override/0 = SubResource("ShaderMaterial_p1mg8")

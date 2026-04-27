@@ -1,5 +1,5 @@
 shader_type spatial;
-render_mode blend_mix;
+render_mode blend_mix, unshaded;
 
 uniform sampler2D noise_texture;
 uniform vec2 portal_size;
