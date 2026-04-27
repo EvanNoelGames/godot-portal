@@ -18,7 +18,7 @@ func _ready() -> void:
 		queue_free()
 
 func _process(_delta: float) -> void:
-	_valid_hit = _raycast.is_colliding() and _raycast.get_collision_normal().y == 0
+	_valid_hit = _raycast.is_colliding()
 	
 	if _valid_hit:
 		_spawn_area.global_position = _raycast.get_collision_point() - _raycast.get_collision_normal() * 0.01
