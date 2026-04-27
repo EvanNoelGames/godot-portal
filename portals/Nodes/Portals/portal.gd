@@ -38,6 +38,9 @@ func _ready() -> void:
 func get_linked_portal() -> Portal:
 	return _linked_portal
 
+func get_camera() -> Camera3D:
+	return _camera
+
 func reset() -> void:
 	_particles.restart()
 	_physics.reset_wall_collider()

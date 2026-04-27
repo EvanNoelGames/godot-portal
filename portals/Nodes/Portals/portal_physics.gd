@@ -1,7 +1,11 @@
 class_name Portal_Physics 
 extends Node3D
 
-var _linked_portal : Portal
+@onready var _linked_portal : Portal = get_parent().get_linked_portal()
+
+@onready var _wall_raycast = $"RayCast3D"
+
+@onready var _rotation_helper = Global.player_node.get_camera().get_node("../..") as Node3D
 
 var _current_traveler : CharacterBody3D
 
@@ -11,19 +15,12 @@ var _just_recieved_traveller := false
 
 var _wall_collider : CollisionShape3D
 
-@onready var _wall_raycast = $"RayCast3D"
-
 const FLIP := Transform3D(Basis(Vector3.UP, PI), Vector3.ZERO)
 
 const RAY_LENGTH = 1
 
 func init_portal() -> void:
 	_wall_collider = null
-
-
-func _ready() -> void:
-	var parentPortal = get_parent() as Portal
-	_linked_portal = parentPortal.get_linked_portal()
 
 
 func _process(delta: float) -> void:
@@ -108,11 +105,14 @@ func _update_player_transform(traveler : CharacterBody3D) -> void:
 	#Apply position transformation
 	_current_traveler.global_position = traveler_matrix.origin
 	
-	#Apply rotation transformation
-	_current_traveler.global_rotation = traveler_matrix.basis.get_euler()
+	#Apply rotation transformation only to y-axis
+	_current_traveler.global_rotation = Vector3(0, traveler_matrix.basis.get_euler().y, 0)
 	
 	#Apply velocity transformation
 	_current_traveler.velocity = portal_matrix.basis * _current_traveler.velocity;
+	
+	#Rotate camera x and z-axis after exitting portal
+	_rotation_helper.rotation.x += traveler_matrix.basis.get_euler().x
 
 
 ##Sets current traveler and signals that a traveler was recieved
