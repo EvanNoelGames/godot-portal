@@ -1,8 +1,9 @@
 [gd_scene format=3 uid="uid://jac2uuqov6um"]
 
 [ext_resource type="Script" uid="uid://r6yxmipwyf2w" path="res://Nodes/Portals/portal.gd" id="1_rla34"]
-[ext_resource type="Shader" uid="uid://b0r6heqteswol" path="res://Nodes/Portals/portal_distortion.gdshader" id="2_4pdc0"]
+[ext_resource type="Shader" path="res://Nodes/Portals/portal_distortion.gdshader" id="2_4pdc0"]
 [ext_resource type="Shader" uid="uid://d37x7uxpt6rv0" path="res://Nodes/Portals/portal_cutout.gdshader" id="3_4nd5k"]
+[ext_resource type="Script" uid="uid://bcg1b7m1mpils" path="res://Nodes/Portals/portal_physics.gd" id="4_4pdc0"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_7ka22"]
 render_priority = 0
@@ -33,6 +34,9 @@ shader_parameter/portal_color = Color(0, 0, 0, 1)
 material = SubResource("ShaderMaterial_nixo0")
 orientation = 2
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_nxoej"]
+size = Vector3(2.0008545, 1.9675293, 0.102017686)
+
 [node name="Portal" type="Node3D" unique_id=1438097116]
 script = ExtResource("1_rla34")
 
@@ -59,3 +63,18 @@ mesh = SubResource("PlaneMesh_rla34")
 [node name="DistortionInstance3D" type="MeshInstance3D" parent="." unique_id=1904861976]
 transform = Transform3D(10, 0, 0, 0, -4.371139e-07, 10, 0, -10, -4.371139e-07, 0, 0, 0)
 mesh = SubResource("PlaneMesh_nxoej")
+
+[node name="PortalPhysics" type="Node3D" parent="." unique_id=2018229363]
+process_priority = 100
+process_physics_priority = 100
+script = ExtResource("4_4pdc0")
+
+[node name="Area3D" type="Area3D" parent="PortalPhysics" unique_id=928934697]
+collision_mask = 2
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="PortalPhysics/Area3D" unique_id=2027208035]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0049447715, -0.012817383, 0.05011177)
+shape = SubResource("BoxShape3D_nxoej")
+
+[connection signal="body_entered" from="PortalPhysics/Area3D" to="PortalPhysics" method="_on_area_3d_body_entered"]
+[connection signal="body_exited" from="PortalPhysics/Area3D" to="PortalPhysics" method="_on_area_3d_body_exited"]
