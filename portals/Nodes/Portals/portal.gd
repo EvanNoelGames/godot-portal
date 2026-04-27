@@ -9,6 +9,8 @@ const CAMERA_NEAR_SAFE_MARGIN : float = 0.5
 @export var _linked_portal : Portal
 
 
+static var blue_portal : Portal
+static var orange_portal : Portal
 var _portal_pos : Vector2
 
 @onready var _camera : Camera3D = $SubViewport/Camera3D
@@ -18,17 +20,27 @@ var _portal_pos : Vector2
 @onready var _particles : GPUParticles3D = $PortalParticles
 @onready var _surface_material : ShaderMaterial = _mesh_instance.mesh.surface_get_material(0)
 @onready var _distortion_material : ShaderMaterial = _distortion_instance.mesh.surface_get_material(0)
+@onready var _physics : Portal_Physics = $PortalPhysics
 
 @onready var _player_camera : Camera3D = Global.player_node.get_camera()
 
 func _ready() -> void:
 	_camera.fov = _player_camera.fov
 	
+	if !blue_portal:
+		blue_portal = self
+	elif !orange_portal:
+		orange_portal = self
+	
 	_distortion_material.set_shader_parameter("portal_color", _portal_color)
 	_particles.draw_pass_1.material.albedo_color = _portal_color
 
 func get_linked_portal() -> Portal:
 	return _linked_portal
+
+func reset() -> void:
+	_particles.restart()
+	_physics.reset_wall_collider()
 
 func _process(_delta: float) -> void:
 	if _linked_portal:

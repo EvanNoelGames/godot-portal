@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://nrjnkhls1bk4"]
 
 [ext_resource type="Script" uid="uid://r6yxmipwyf2w" path="res://Nodes/Portals/portal.gd" id="1_qljpf"]
-[ext_resource type="Shader" path="res://Nodes/Portals/portal_distortion.gdshader" id="2_w0p17"]
+[ext_resource type="Shader" uid="uid://b0r6heqteswol" path="res://Nodes/Portals/portal_distortion.gdshader" id="2_w0p17"]
 [ext_resource type="PackedScene" uid="uid://2ouo4ngebiq3" path="res://Scenes/portal_particles.tscn" id="4_v5dft"]
 [ext_resource type="Shader" uid="uid://d37x7uxpt6rv0" path="res://Nodes/Portals/portal_cutout.gdshader" id="4_yshqu"]
 [ext_resource type="Texture2D" uid="uid://bevqxpy77pjc3" path="res://Textures/T_VFX_Flare_16.PNG" id="5_v5dft"]
@@ -32,7 +32,7 @@ resource_local_to_scene = true
 material = SubResource("ShaderMaterial_nixo0")
 orientation = 2
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_m81mj"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_miqdc"]
 resource_local_to_scene = true
 transparency = 1
 blend_mode = 1
@@ -44,15 +44,18 @@ albedo_texture_force_srgb = true
 use_particle_trails = true
 distance_fade_max_distance = 1.0
 
-[sub_resource type="RibbonTrailMesh" id="RibbonTrailMesh_nixo0"]
+[sub_resource type="RibbonTrailMesh" id="RibbonTrailMesh_m81mj"]
 resource_local_to_scene = true
-material = SubResource("StandardMaterial3D_m81mj")
+material = SubResource("StandardMaterial3D_miqdc")
 size = 0.2
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_npt0l"]
 size = Vector3(1.5265808, 1.9675293, 0.19457042)
 
-[node name="Portal" type="Node3D" unique_id=1438097116]
+[sub_resource type="BoxShape3D" id="BoxShape3D_miqdc"]
+size = Vector3(3, 2.5, 2)
+
+[node name="Portal" type="Node3D" unique_id=1438097116 groups=["portal"]]
 script = ExtResource("1_qljpf")
 
 [node name="SubViewport" type="SubViewport" parent="." unique_id=158332152]
@@ -77,7 +80,7 @@ mesh = SubResource("PlaneMesh_npt0l")
 
 [node name="PortalParticles" parent="." unique_id=1827278235 instance=ExtResource("4_v5dft")]
 transform = Transform3D(0.4, 0, 0, 0, 0.6, 0, 0, 0, 0.4, 0, 0, 0.015)
-draw_pass_1 = SubResource("RibbonTrailMesh_nixo0")
+draw_pass_1 = SubResource("RibbonTrailMesh_m81mj")
 
 [node name="PortalPhysics" type="Node3D" parent="." unique_id=2095780557]
 process_physics_priority = 100
@@ -93,6 +96,13 @@ shape = SubResource("BoxShape3D_npt0l")
 [node name="RayCast3D" type="RayCast3D" parent="PortalPhysics" unique_id=1517290039]
 target_position = Vector3(0, 0, -1)
 hit_from_inside = true
+
+[node name="SafetyStaticBody3D" type="StaticBody3D" parent="." unique_id=1145556856 groups=["portal"]]
+collision_layer = 4
+collision_mask = 4
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="SafetyStaticBody3D" unique_id=338723964]
+shape = SubResource("BoxShape3D_miqdc")
 
 [connection signal="body_entered" from="PortalPhysics/Area3D" to="PortalPhysics" method="_on_area_3d_body_entered"]
 [connection signal="body_exited" from="PortalPhysics/Area3D" to="PortalPhysics" method="_on_area_3d_body_exited"]

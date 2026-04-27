@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://crju1ifyw5dyf" path="res://Nodes/Player/player.gd" id="1_us8wf"]
 [ext_resource type="Script" uid="uid://ceoyjy5m2ulki" path="res://Nodes/Player/ignore_rotate.gd" id="2_lkjqq"]
+[ext_resource type="PackedScene" uid="uid://b1pqkq54nl5f0" path="res://Nodes/Portals/portal_gun.tscn" id="3_lkjqq"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_5s528"]
 resource_local_to_scene = true
@@ -52,3 +53,5 @@ mesh = SubResource("CapsuleMesh_us8wf")
 [node name="CameraHolder" type="Node3D" parent="HeadAnchor/RotationHelper" unique_id=1439329297]
 
 [node name="Camera" type="Camera3D" parent="HeadAnchor/RotationHelper/CameraHolder" unique_id=1888675057]
+
+[node name="PortalGun" parent="HeadAnchor/RotationHelper/CameraHolder" unique_id=258161413 instance=ExtResource("3_lkjqq")]

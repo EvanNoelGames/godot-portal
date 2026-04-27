@@ -1,0 +1,26 @@
+[gd_scene format=3 uid="uid://b1pqkq54nl5f0"]
+
+[ext_resource type="Script" uid="uid://bbhij245nrhob" path="res://Nodes/Portals/portal_gun.gd" id="1_q2k6i"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_q2k6i"]
+size = Vector3(0.39, 0.435, 0.93)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_q2k6i"]
+size = Vector3(3, 2.2, 1)
+
+[node name="PortalGun" type="Node3D" unique_id=258161413]
+script = ExtResource("1_q2k6i")
+
+[node name="RayCast3D" type="RayCast3D" parent="." unique_id=1528526727]
+target_position = Vector3(0, 0, -100)
+collision_mask = 5
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1130793995]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, -0.5, -1)
+mesh = SubResource("BoxMesh_q2k6i")
+
+[node name="SpawnArea3D" type="Area3D" parent="." unique_id=2125394511]
+collision_layer = 0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="SpawnArea3D" unique_id=1277876694]
+shape = SubResource("BoxShape3D_q2k6i")

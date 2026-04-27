@@ -66,6 +66,8 @@ func _physics_process(delta: float) -> void:
 		linked_physics.call_deferred("register_traveller", _current_traveler)
 		_current_traveler = null
 
+func reset_wall_collider() -> void:
+	_wall_collider = null
 
 ##Tries to get wall collider behind portal
 func _get_wall_collider() -> void:

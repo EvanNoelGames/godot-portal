@@ -16,8 +16,10 @@ size = Vector3(20, 1, 20)
 radius = 0.6437658
 
 [sub_resource type="BoxMesh" id="BoxMesh_hkw38"]
+size = Vector3(1, 1, 2)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_hkw38"]
+size = Vector3(1, 1, 2)
 
 [node name="PortalPhysicsScene" type="Node3D" unique_id=1997632050]
 
@@ -72,7 +74,7 @@ _portal_color = Color(0.27095604, 0.9999997, 0.9214636, 1)
 _linked_portal = NodePath("../Portal")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="." unique_id=1680876735]
-transform = Transform3D(5.6918836, 0, 0, 0, 2.8308249, 0, 0, 0, 1, 0, 1.2980019, -3.3368485)
+transform = Transform3D(5.6918836, 0, 0, 0, 2.8308249, 0, 0, 0, 1, 0, 1.2980019, -3.8368485)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D" unique_id=1844875590]
 mesh = SubResource("BoxMesh_hkw38")
@@ -81,7 +83,7 @@ mesh = SubResource("BoxMesh_hkw38")
 shape = SubResource("BoxShape3D_hkw38")
 
 [node name="StaticBody3D2" type="StaticBody3D" parent="." unique_id=1295423025]
-transform = Transform3D(5.6918836, 0, 0, 0, 2.8308249, 0, 0, 0, 1, 0, 1.2980019, 3.5958126)
+transform = Transform3D(5.6918836, 0, 0, 0, 2.8308249, 0, 0, 0, 1, 0, 1.2980019, 4.095813)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D2" unique_id=1947005605]
 mesh = SubResource("BoxMesh_hkw38")
