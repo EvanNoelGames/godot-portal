@@ -25,7 +25,7 @@ size = Vector3(3, 3, 5)
 [node name="RenderCamerasScene" type="Node3D" unique_id=1997632050]
 
 [node name="Portal 1" parent="." unique_id=1438097116 node_paths=PackedStringArray("_linked_portal") instance=ExtResource("1_phav4")]
-transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, -0.35499215, 1.3795819, 1.499)
+transform = Transform3D(-1, 0, -1.509958e-07, 0, 1, 0, 1.509958e-07, 0, -1, -0.35499215, 1.3795819, 1.499)
 _portal_color = Color(0, 0, 1, 1)
 _linked_portal = NodePath("../Portal 2")
 
@@ -36,6 +36,7 @@ _linked_portal = NodePath("../Portal 1")
 
 [node name="Player" parent="." unique_id=1428363437 instance=ExtResource("1_81tfx")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+_dash_speed = 1500.0
 _movement_settings = ExtResource("2_gd0cj")
 
 [node name="Geometry" type="Node3D" parent="." unique_id=145330962]
@@ -56,6 +57,19 @@ transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 3.5,
 mesh = SubResource("BoxMesh_fp515")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Geometry/StaticBody3D2" unique_id=1418915667]
+shape = SubResource("BoxShape3D_jjkjk")
+
+[node name="StaticBody3D4" type="StaticBody3D" parent="Geometry" unique_id=471324289]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, -5.839384, 1.5, -4.283911)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Geometry/StaticBody3D4" unique_id=1272593345]
+mesh = SubResource("BoxMesh_fp515")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="Geometry/StaticBody3D4" unique_id=1940664632]
+transform = Transform3D(1, -2.554501e-08, -3.975762e-08, -2.5545011e-08, 0.4155983, -0.9095483, 3.975762e-08, 0.9095483, 0.4155983, -4.7683716e-07, -11.353447, -2.63727)
+mesh = SubResource("BoxMesh_fp515")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Geometry/StaticBody3D4" unique_id=610843912]
 shape = SubResource("BoxShape3D_jjkjk")
 
 [node name="StaticBody3D3" type="StaticBody3D" parent="Geometry" unique_id=91730842]

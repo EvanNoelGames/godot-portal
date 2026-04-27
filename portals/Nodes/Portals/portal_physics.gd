@@ -17,6 +17,10 @@ const FLIP := Transform3D(Basis(Vector3.UP, PI), Vector3.ZERO)
 
 const RAY_LENGTH = 1
 
+func init_portal() -> void:
+	_wall_collider = null
+
+
 func _ready() -> void:
 	var parentPortal = get_parent() as Portal
 	_linked_portal = parentPortal.get_linked_portal()
@@ -66,8 +70,10 @@ func _physics_process(delta: float) -> void:
 		linked_physics.call_deferred("register_traveller", _current_traveler)
 		_current_traveler = null
 
+
 func reset_wall_collider() -> void:
 	_wall_collider = null
+
 
 ##Tries to get wall collider behind portal
 func _get_wall_collider() -> void:
@@ -82,6 +88,7 @@ func _get_wall_collider() -> void:
 	if (wall is CollisionObject3D):
 		_wall_collider = wall.get_node("CollisionShape3D") 
 
+
 ##Used to prevent edge case of sign being zero
 func _clamped_sign(value : float) -> int:
 	var x = sign(value)
@@ -89,13 +96,23 @@ func _clamped_sign(value : float) -> int:
 		x = -1
 	return x
 
+
 ##Uses change of basis to modify player position and velocity around new portal transform
 func _update_player_transform(traveler : CharacterBody3D) -> void:
-	#Transform traveller velocity, position, and orientation to new portal basis
-	var m = _linked_portal.global_transform * FLIP * global_transform.affine_inverse() * _current_traveler.global_transform
-	_current_traveler.global_position = m.origin
-	_current_traveler.global_rotation = m.basis.get_euler()
-	_current_traveler.velocity = m.basis * _current_traveler.velocity;
+	#Transformation matrix from entry portal to exit portal
+	var portal_matrix = _linked_portal.global_transform * FLIP * self.global_transform.affine_inverse()
+	
+	#Transformation matrix for traveler orientation and position
+	var traveler_matrix = portal_matrix * _current_traveler.global_transform
+	
+	#Apply position transformation
+	_current_traveler.global_position = traveler_matrix.origin
+	
+	#Apply rotation transformation
+	_current_traveler.global_rotation = traveler_matrix.basis.get_euler()
+	
+	#Apply velocity transformation
+	_current_traveler.velocity = portal_matrix.basis * _current_traveler.velocity;
 
 
 ##Sets current traveler and signals that a traveler was recieved

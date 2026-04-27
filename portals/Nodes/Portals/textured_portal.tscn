@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://nrjnkhls1bk4"]
 
 [ext_resource type="Script" uid="uid://r6yxmipwyf2w" path="res://Nodes/Portals/portal.gd" id="1_qljpf"]
-[ext_resource type="Shader" uid="uid://b0r6heqteswol" path="res://Nodes/Portals/portal_distortion.gdshader" id="2_w0p17"]
+[ext_resource type="Shader" path="res://Nodes/Portals/portal_distortion.gdshader" id="2_w0p17"]
 [ext_resource type="PackedScene" uid="uid://2ouo4ngebiq3" path="res://Scenes/portal_particles.tscn" id="4_v5dft"]
 [ext_resource type="Shader" uid="uid://d37x7uxpt6rv0" path="res://Nodes/Portals/portal_cutout.gdshader" id="4_yshqu"]
 [ext_resource type="Texture2D" uid="uid://bevqxpy77pjc3" path="res://Textures/T_VFX_Flare_16.PNG" id="5_v5dft"]
@@ -50,7 +50,7 @@ material = SubResource("StandardMaterial3D_miqdc")
 size = 0.2
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_npt0l"]
-size = Vector3(1.5265808, 1.9675293, 0.19457042)
+size = Vector3(1.5265808, 1.9675293, 0.98150396)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_miqdc"]
 size = Vector3(3, 2.5, 2)
@@ -83,14 +83,14 @@ transform = Transform3D(0.4, 0, 0, 0, 0.6, 0, 0, 0, 0.4, 0, 0, 0.015)
 draw_pass_1 = SubResource("RibbonTrailMesh_m81mj")
 
 [node name="PortalPhysics" type="Node3D" parent="." unique_id=2095780557]
-process_physics_priority = 100
+process_physics_priority = 1
 script = ExtResource("6_miqdc")
 
 [node name="Area3D" type="Area3D" parent="PortalPhysics" unique_id=424020710]
 collision_mask = 2
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="PortalPhysics/Area3D" unique_id=1623359615]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.016921073, -0.012817383, 0.09638812)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.016921073, -0.012817383, 0.48985487)
 shape = SubResource("BoxShape3D_npt0l")
 
 [node name="RayCast3D" type="RayCast3D" parent="PortalPhysics" unique_id=1517290039]

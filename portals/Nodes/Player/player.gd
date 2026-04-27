@@ -4,6 +4,8 @@ extends CharacterBody3D
 @export_group("Settings")
 @export var _sensitivity : float = 3.0
 @export_group("Movement")
+@export var _dash_speed : float = 50.0
+@export var _allow_dash : bool = true
 @export var _allow_jump : bool = true
 @export var _allow_crouch : bool = true
 @export var _movement_settings : MovementSettings
@@ -12,6 +14,7 @@ extends CharacterBody3D
 
 var pressing_crouch : bool = false
 var crouching : bool = false
+var dashing : bool = false
 
 var direction : Vector3 = Vector3.ZERO
 var wish_jump : bool = false
@@ -73,6 +76,9 @@ func poll_input():
 	
 	if _allow_crouch:
 		pressing_crouch = Input.is_action_pressed("player_crouch")
+		
+	if _allow_dash:
+		dashing = Input.is_action_pressed("player_dash")
 #endregion
 
 #region Movement
@@ -113,6 +119,9 @@ func update_velocity_ground(wish_dir: Vector3, delta: float):
 	
 	if crouching:
 		return accelerate(wish_dir, _movement_settings.max_velocity_crouch, delta)
+		
+	if dashing:
+		return accelerate(wish_dir, _dash_speed, delta)
 	
 	return accelerate(wish_dir, _movement_settings.max_velocity_ground, delta)
 

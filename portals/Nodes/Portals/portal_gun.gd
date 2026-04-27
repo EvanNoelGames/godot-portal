@@ -77,6 +77,8 @@ func _spawn_portal(portal_type : PortalType) -> void:
 	target_portal.reset_physics_interpolation()
 	target_portal.look_at(new_position - new_normal)
 	target_portal.reset()
+	var portal_physics = target_portal.get_node("PortalPhysics") as Portal_Physics
+	portal_physics.init_portal()
 	
 	_raycast.clear_exceptions()
 	_spawning_portal = false
