@@ -1,7 +1,7 @@
 class_name Portal
 extends Node3D
 
-const CAMERA_NEAR_SAFE_MARGIN : float = 0.05
+const CAMERA_NEAR_SAFE_MARGIN : float = 0.5
 
 @export_group("Visual")
 @export var _portal_color : Color = Color.WHITE

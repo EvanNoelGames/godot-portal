@@ -22,10 +22,17 @@ func _ready() -> void:
 	_linked_portal = parentPortal.get_linked_portal()
 
 
-func _physics_process(delta: float) -> void:
+func _process(delta: float) -> void:
 	#Try to get wall collider behind portal
 	_get_wall_collider()
 	
+	if (_current_traveler == null):
+		_wall_collider.disabled = false
+	else:
+		_wall_collider.disabled = true
+
+
+func _physics_process(delta: float) -> void:
 	if (_wall_collider == null):
 		return
 	
@@ -34,10 +41,7 @@ func _physics_process(delta: float) -> void:
 		return
 		
 	if (_current_traveler == null):
-		_wall_collider.disabled = false
 		return
-	
-	_wall_collider.disabled = true
 	
 	#Calculate player offset from portal
 	var player_offset : Vector3 = _current_traveler.global_position - self.global_position
