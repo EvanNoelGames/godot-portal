@@ -1,4 +1,5 @@
 shader_type spatial;
+
 // tells godot to keep the fullscreen quad from being affected by lighting and fog
 render_mode unshaded, fog_disabled, blend_mix, depth_test_disabled;
 
@@ -32,6 +33,8 @@ vec2 rot2D(float offset, float angle)
 	return vec2(cos(angle) * offset, sin(angle) * offset);
 }
 
+/// code for blur from : 
+///https://godotshaders.com/shader/circle-bokeh-blur/
 vec3 blur_effect (sampler2D sp, vec2 uv, vec2 scale, vec2 iRes)
 {
 	vec2 ps = (1.0 / iRes.xy) * scale;
